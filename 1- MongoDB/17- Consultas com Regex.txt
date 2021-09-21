@@ -1,0 +1,24 @@
+-----------------------------------------------------------------
+-- Consultas com Regex
+-----------------------------------------------------------------
+
+---> Método Regex : aplicar expressão regulares nas consultas
+
+	-- sintaxe
+	db.<nomeCollection>.find({<field>:{$regex:/pattern/,$options:'<options>'}})
+	db.<nomeCollection>.find({<field>:{$regex:'pattern',$options:'<options>'}})
+	db.<nomeCollection>.find({<field>:{$regex:/pattern/<options>}})
+	
+
+	-- options
+		* i - ignorar case-sensitive
+		* m - combinar varias linhas (incluir as ancoras ^ no inicio e $ no final)
+		
+
+	-- exemplo :: retornar os clientes com o nome lucas, de forma não case-sensitive
+	db.cliente.find({nome: {$regex: "lucas",$option: "i"}})
+	db.cliente.find({nome: {$regex: /lucas/,$option: "i"}})
+	db.cliente.find({nome: {$regex: lucas/i}})
+	
+
+---> O Regex é custoso, use somente onde realmente precisa.

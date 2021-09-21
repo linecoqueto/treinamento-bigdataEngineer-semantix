@@ -1,0 +1,20 @@
+-----------------------------------------------------------------
+-- Deletar Documentos
+-----------------------------------------------------------------
+
+---> sintaxe
+	db.<nomeCollection>.deleteOne(<fitro>)
+	db.<nomeCollection>.deleteMany(<fitro>)
+	
+
+---> Exemplo
+
+	-- deletar N documentos
+		db.cliente.deleteMany({status:"inativo"})
+
+	-- deletar um documento
+		db.cliente.deleteOne({_id: 2})
+		
+	-- deletar collection
+		db.cliente.drop()
+	

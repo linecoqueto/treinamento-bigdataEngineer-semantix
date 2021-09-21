@@ -1,0 +1,91 @@
+-----------------------------------------------------------------
+-- COMANDOS BÁSICOS :: CRUD
+-----------------------------------------------------------------
+
+---> criar banco de dados
+use <nomeBD>
+
+---> mostrar todos os banco de dados
+show dbs
+
+---> visualizar banco de dados conectado
+db
+
+-->>>>> OBS: para visualizar o BD é necessario criar uma coleção.
+
+---> criar uma collection
+db.createCollection('<nomeCollection>')
+
+---> visualizar collections
+show collections
+
+-->>>>> OBS: retorno {"ok" : 1 } true - deu certo // {"ok" : 0 } false - deu erro
+
+---> excluir collection
+db.<nomeCollection>.drop()
+
+---> excluir BD
+db.dropDatabase()
+
+---> renomear uma collection
+db.<nomeCollection>.renameCollection('<nomeNovaCollection>')
+
+--->>>> criar documentos <<<<
+
+---> inserir um documento
+db.<nomeCollection>.insertOne({<documento>})
+
+---> inserir N documentos (Array)
+db.<nomeCollection>.InsertMany(
+[{<documento1>}, {<documento2>}, {<documentoN>}]
+)
+
+---> listar documentos da collection
+db.<nomeCollection>.find().pretty()
+
+
+-----------------------------------------------------------------
+-- Data Type
+-----------------------------------------------------------------
+ 
+- objectId
+- string
+- Número (long, int, decimal, double)
+- boolean
+- array
+- date
+- null
+- regex
+- timestamp
+
+
+-----------------------------------------------------------------
+-- Exemplo de documento com array
+-----------------------------------------------------------------
+ 
+ db.cliente.insertOne(
+ {
+	nome: "Aline",
+	idade: 29,
+	conhecimento: ["windows", "linux", "hadoop"]
+ }
+ )
+ 
+ 
+ -----------------------------------------------------------------
+-- Exemplo de documento alinhado
+-----------------------------------------------------------------
+  db.cliente.insertOne(
+ {
+	nome: "Aline",
+	idade: 29,
+	conhecimento: ["windows", "linux", "hadoop"],
+	endereço: {
+				rua: "tal de tal",
+				numero: 2123
+				bairro: "bairroxx"
+				cidade: "cidadexxx"
+	}
+ }
+ )
+ 

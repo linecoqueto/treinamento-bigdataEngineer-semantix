@@ -1,0 +1,149 @@
+-----------------------------------------------------------------
+--Agregações de Match, Group, Sort e Limit
+-----------------------------------------------------------------
+
+----------------------------------------------------------------- 
+--1. Crie o banco de dados escola
+-----------------------------------------------------------------
+
+use escola
+
+-----------------------------------------------------------------
+--2. Crie a collection alunos no banco de dados escola
+-----------------------------------------------------------------
+
+db.createCollection('alunos')
+
+-----------------------------------------------------------------
+--3. Importe o arquivo “dataset/alunos.csv” para a collection alunos, com os seguintes atributos:
+/*
+id_discente: Number
+nome: String
+ano_ingresso: Number
+nivel: String
+id_curso: Number
+Arquivos para Dataset
+*/
+-----------------------------------------------------------------
+
+via MongoDB Compass - ok
+
+
+-----------------------------------------------------------------
+--4. Visualizar os valores únicos do “nivel” de cada “ano_ingresso”
+-----------------------------------------------------------------
+
+{
+  _id: "$ano_ingresso",
+  nivel_por_ano: {
+    $addToSet: "$nivel"
+  }
+}
+
+-----------------------------------------------------------------
+--5. Calcular a quantidade de alunos matriculados por cada “id_curso”
+-----------------------------------------------------------------
+
+{
+  _id: "$id_curso",
+  qtd_por_curso: {
+    $sum: 1 -- dessa forma "sum : 1" é a mesma coisa que um count
+  }
+}
+
+-----------------------------------------------------------------
+--6. Calcular a quantidade de alunos matriculados por “ano_ingresso” no "id_curso“: 1222
+-----------------------------------------------------------------
+
+--$match:
+{
+  "id_curso":1222
+  
+}
+
+--$group:
+{
+  _id: "$ano_ingresso",
+  qtd_por_ano: {
+    $sum: 1
+  }
+}
+
+-----------------------------------------------------------------
+--7. Visualizar todos os documentos do “nível”: “M”
+-----------------------------------------------------------------
+
+{
+  "nivel":"M"
+  
+}
+
+-----------------------------------------------------------------
+--8. Visualizar o último ano que teve cada curso (id_curso) dos níveis “M”
+-----------------------------------------------------------------
+
+--$match:
+{
+  "nivel":"M"
+  
+}
+
+--$$group:
+{
+  _id: "$id_curso",
+  "max_curso_ult_ano": {
+    $max: "$ano_ingresso"
+  }
+}
+
+-----------------------------------------------------------------
+--9. Visualizar o último ano que teve cada curso (id_curso) dos níveis “M”, 
+--ordenados pelos anos mais novos de cada curso
+-----------------------------------------------------------------
+
+--$match:
+{
+  "nivel":"M"
+  
+}
+
+--$$group:
+{
+  _id: "$id_curso",
+  "max_curso_ult_ano": {
+    $max: "$ano_ingresso"
+  }
+}
+
+--$sort:
+{
+  "max_curso_ult_ano": -1
+}
+
+
+-----------------------------------------------------------------
+--10. Visualizar o último ano que teve os 5 últimos cursos (id_curso) 
+--dos níveis “M”, ordenados pelos anos mais novos
+-----------------------------------------------------------------
+
+--$match:
+{
+  "nivel":"M"
+  
+}
+
+--$$group:
+{
+  _id: "$id_curso",
+  "max_curso_ult_ano": {
+    $max: "$ano_ingresso"
+  }
+}
+
+--$sort:
+{
+  "max_curso_ult_ano": -1
+}
+
+--$limit
+5

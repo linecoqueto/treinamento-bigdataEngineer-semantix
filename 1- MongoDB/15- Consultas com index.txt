@@ -1,0 +1,20 @@
+-----------------------------------------------------------------
+-- Consultas com Index
+-----------------------------------------------------------------
+
+---> Forçar o otimizador de consultas do mongoDB fazer uso de um indice especifico
+
+	-- sintaxe
+	db.<nomeCollection>.find({<filtro>}).hint({<key>})
+	db.cliente.find().hint({nome:1})
+	
+	-- como confirmar se a consultafaz uso do índice? 
+	-- utilizando o método explain
+	
+	-- verificar stage "queryPlanner.winningPlane"
+		* COLLSCAN : collection Scan
+		* IXSCAN : scan com index keys
+		* FETCH : recuperar documentos
+		* SHARD_MERGE : junção de shards
+		* SHARDING_FILTER : filtrar documentos órfãos em shards
+

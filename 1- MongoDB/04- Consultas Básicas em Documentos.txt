@@ -1,0 +1,42 @@
+-----------------------------------------------------------------
+-- COMANDOS BÁSICOS :: CONSULTAS
+-----------------------------------------------------------------
+
+---> sintaxe:
+db.<nomeCollection>.find({<criterioConsulta>},{<projecao>})
+
+--> Criterio: operadores aplicados nos atributos
+{<atributo>: {<operador>:<valor>}}
+
+	--> por atributo:
+	db.<nomeCollection>.find({<atributo> : <valor>})
+	db.cliente.find({nome: "João"})
+	db.cliente.find({"endereco.cidade": "João"}) --pesquisa em um array, utilizar aspas no campo
+
+	--> por um atributo com operador
+	db.<nomeCollection>.find({<atributo> : <valor>})
+	db.cliente.find({idade: {$lt: 18}})
+	
+
+	--> Operador de pesquisa
+	/* 
+	$eq  - igual a 
+	$ne  - diferente de   
+	$gt  - maior que
+	$gte - maior ou igual 
+	$lt  - menor que
+	$lte - menor ou igual
+	$in  - na lista
+	$nin - fora da lista
+	$not - não
+	*/
+
+
+--> Projeção: atributos que são visualizados pela consulta
+{<atributo>: 0} --ocultar o atributo
+{<atributo>: 1} --mostrar o atributo
+
+	--> Exemplos:
+	db.cliente.find({nome: "lucas"},{conhecimento: 0}) --consultar o nome lucas e não apresentar o atributo conhecimento
+	db.cliente.find({nome: "lucas"},{conhecimento: 1}) --consultar o nome lucas e não apresentar apenas o atributo conhecimento
+	db.cliente.find({nome: "lucas"},{_id: 0, conhecimento: 0}) --consultar o nome lucas e não apresentar o atributo _id e conhecimento

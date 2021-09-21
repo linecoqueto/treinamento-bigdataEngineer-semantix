@@ -1,0 +1,54 @@
+-----------------------------------------------------------------
+-- Trabalhando com Index
+-----------------------------------------------------------------
+
+---> estrutura de dados B-tree
+---> execução eficiente de consultas no MongoDB
+
+
+---> Index Default
+	-- mongoDB cria um index exclusivo no atributo _id
+	-- recomenda-se semrpe usar esse default: aplicação deve garantir a exclusividade dos valores no atributo _id para evitar erros.
+	
+	
+---> criação de index
+	-- metodo createIndex :: irá criar um indice se ainda não existir um indice com a mesma especificação
+	
+	-- sintaxe
+	db.<nomeCollection>.createIndex({<key>,<opçoes>})
+		-- valor:: 1 asc ou  -1 desc
+		
+		-- exemplo
+			--* criar index
+			db.cliente.createIndex({nome:1})
+			
+			--* visualizar indices
+			db.cliente.getIndexes() 
+			
+		
+	-- Nome padrão do index
+	<atributo>_<valor>_<atributo>_<valor> ...
+	
+		-- exemplo
+		db.cliente.createIndex({nome:1, item:-1}) -- nome do index: nome_1_item_-1
+		db.cliente.createIndex({nome: 1, item: -1},{name:"query_itens"})
+		
+	
+	--index exclusivo
+		db.cliente.createindex({user_id: 1}, {unique: true})
+		
+
+---> removoção de index
+
+	-- sintaxe
+	db.<nomeCollection>.dropIndex({<key>})
+	db.cliente.dropIndex({nome: 1})
+	
+	-- excluir todos os indexes de uma collection
+	db.<nomeCollection>.dropIndexes()
+	db.cliente.dropIndexes()
+	
+	-- alterar um index :: remover e criar novamente
+	
+	
+	

@@ -1,0 +1,57 @@
+-----------------------------------------------------------------
+--Exercícios - Consultas 1
+-----------------------------------------------------------------
+
+> use aline
+switched to db aline
+
+-----------------------------------------------------------------
+--1. Mostrar todos os documentos da collection produto
+-----------------------------------------------------------------
+
+> db.produto.find()
+{ "_id" : 1, "nome" : "cpu i5", "qtd" : 15 }
+{ "_id" : 2, "nome" : "memória ram", "qtd" : 10, "descricao" : { "armazenamento" : "8GB", "tipo" : "DDR4" } }
+{ "_id" : 3, "nome" : "mouse", "qtd" : 50, "descricao" : { "conexao" : "USB", "so" : [ "Windows", "Mac", "Linux" ] } }
+{ "_id" : 4, "nome" : "hd externo", "qtd" : 20, "descricao" : { "conexao" : "USB", "armazenamento" : "500GB" }, "so" : [ "Windows 10", "Windows 8", "Windows 7" ] }
+
+
+-----------------------------------------------------------------
+--2. Pesquisar na collection produto, os documentos com os seguintes atributos:
+-----------------------------------------------------------------
+
+--a) Nome = mouse
+> db.produto.find({nome:"mouse"})
+{ "_id" : 3, "nome" : "mouse", "qtd" : 50, "descricao" : { "conexao" : "USB", "so" : [ "Windows", "Mac", "Linux" ] } }
+
+
+--b) Quantidade = 20 e apresentar apenas o campo nome
+> db.produto.find({qtd: 20},{_id: 0, descricao: 0, so: 0, qtd: 0 })
+{ "nome" : "hd externo" }
+
+
+--c) Quantidade <= 20 e apresentar apenas os campos nome e qtd
+> db.produto.find({qtd: {$lte: 20}},{_id: 0, descricao: 0, so: 0 })
+{ "nome" : "cpu i5", "qtd" : 15 }
+{ "nome" : "memória ram", "qtd" : 10 }
+{ "nome" : "hd externo", "qtd" : 20 }
+
+
+--d) Quantidade entre 10 e 20
+> db.produto.find({qtd: {$gte: 10, $lte: 20}})
+{ "_id" : 1, "nome" : "cpu i5", "qtd" : 15 }
+{ "_id" : 2, "nome" : "memória ram", "qtd" : 10, "descricao" : { "armazenamento" : "8GB", "tipo" : "DDR4" } }
+{ "_id" : 4, "nome" : "hd externo", "qtd" : 20, "descricao" : { "conexao" : "USB", "armazenamento" : "500GB" }, "so" : [ "Windows 10", "Windows 8", "Windows 7" ] }
+
+
+--e) Conexão = USB e não apresentar o campo _id e qtd
+> db.produto.find({"descricao.conexao": "USB"}, {_id: 0, qtd: 0})
+{ "nome" : "mouse", "descricao" : { "conexao" : "USB", "so" : [ "Windows", "Mac", "Linux" ] } }
+{ "nome" : "hd externo", "descricao" : { "conexao" : "USB", "armazenamento" : "500GB" }, "so" : [ "Windows 10", "Windows 8", "Windows 7" ] }
+
+
+--f) SO que contenha “Windows” ou “Windows 10”
+> db.produto.find({"descricao.so": {$in: ["Windows", "Windows 8"]}})
+{ "_id" : 3, "nome" : "mouse", "qtd" : 50, "descricao" : { "conexao" : "USB", "so" : [ "Windows", "Mac", "Linux" ] } }
+{ "_id" : 4, "nome" : "hd externo", "qtd" : 20, "descricao" : { "conexao" : "USB", "armazenamento" : "500GB" }, "so" : [ "Windows 10", "Windows 8", "Windows 7" ] }
+

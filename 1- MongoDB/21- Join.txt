@@ -1,0 +1,27 @@
+-----------------------------------------------------------------
+-- Agregação Lookup
+-----------------------------------------------------------------
+
+--Lookup
+	--* left outer join
+	
+	--sintaxe
+	db.<nomeCollection>.aggregate{
+	{$lookup: {
+		from: <collectionJoin>
+		localField: <atributoJoinLocal>
+		foreighField: <atributoJoinFrom>
+		as: <nomeArraySaida>}}
+	}
+	
+	--exemplo
+	db.funcionario.aggregate([
+	{$lookup: {
+		from: "vendas"
+		localField: "cod_func"
+		foreighField: "cod_func"
+		as: "vendasFuncionario"
+	},
+	{$project: {"_id":0, "cod_func":1,
+	 "vendasFuncionario.cod_cliente":1}}
+	}])

@@ -1,0 +1,49 @@
+-----------------------------------------------------------------
+-- Metódos de atualizar documentos
+-----------------------------------------------------------------
+
+---> Principais médodos
+	db.<nomeCOllection>.updateOne(<filtro>,<atualizacao>)
+	db.<nomeCOllection>.updateMany(<filtro>,<atualizacao>)
+
+ 
+---> operador set
+	-- atualizar o atributo
+	-- caso o atributo não exista, é criado
+	
+	-- exemplo
+	db.cliente.updateOne(
+			{_id: 1},
+			{$set: {idade:25, estado: "SP"}}
+	)
+	
+
+---> operador unset
+	-- remover o atributo
+	-- o valor do atributo dever ser ""
+	
+	-- exemplo
+	db.cliente.updateOne{
+			{_id: 1},
+			{$unset: {idade:""}}
+	}
+	
+
+---> Atualizar N Documentos
+	db.cliente.updateMany{
+			{idade: {$gt: 27}},
+			{$set: {seguro_carro: "baixo"}}
+	}
+	
+
+---> operador rename
+	-- atualizar os nomes dos atributos
+	
+	-- sintaxe
+	{$rename: {<nomeAtributoAtual>:<nomeAtributoNovo>,<nomeAtributo2Atual>:<nomeAtributo2Novo>, ...}}
+	
+	-- exemplo
+	db.cliente.updateMany{
+			{},
+			{$rename: {"nome": "nome_completo"}}
+	}

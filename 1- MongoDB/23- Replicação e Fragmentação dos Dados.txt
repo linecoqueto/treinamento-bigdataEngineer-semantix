@@ -1,0 +1,51 @@
+-----------------------------------------------------------------
+-- Replicação e Fragmentação dos Dados
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+---->> Replica Set
+-----------------------------------------------------------------
+
+* Ambientes de produção
+	- redundância e alta disponibilidade
+	- tolerância a falhas
+	
+* Denominado como Replica SETBND
+	- grupo de instâncias mongod (nós) que mantém o mesmo conjunto de dados.
+	- Nós
+		- 1 primário: 
+			. receba as solicitações de escrita e leitura
+			. registrar todas as alterações em seus datasets em seu log de operação (oplog)
+		
+		- N Secundários
+			. Réplica do oplog do nó primário
+			. Ganhar desempenho na leitura de dados (distribuir solicitações de leitura nos secundários)
+
+--> visualizar configuração do replica set: rs.conf()
+
+--> verificar o status do replica set: rs.status()
+
+
+-----------------------------------------------------------------
+---->> Shard
+-----------------------------------------------------------------
+
+* é a forma como o mongoDB particiona os dados
+* muito útil para um grande volume de dados
+* usado para escalar no mongoDB
+
+* MongoDb fragmenta dados no nível de collection
+	- distribui os dados entre os shards no cluster
+	
+* Arquitetura
+	- Shard:
+		. Contém um subconjunto dos dados fragmentados
+		. Pode ser implementado com um replica set
+		. escabilidade horizontal
+		
+	- config server
+		. armazena os metadados
+		. definições de configuração do cluster
+		
+	- mongos
+		. interface entre a aplicação cliente e o sharded cluster

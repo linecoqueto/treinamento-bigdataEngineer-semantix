@@ -1,0 +1,100 @@
+-----------------------------------------------------------------
+-- Agregações no MongoDB
+-----------------------------------------------------------------
+
+-- agregação de propósito unico: mais simples, porém limitadas
+
+-- função map-reduce: forma tradicional de realizar agregações em big data; 
+--					  faz uso de funções de JavaScript (mais opções de manipulação de dados e dificil a implementação);
+
+-- pipeline de agregação: melhor desempenho que map-reduce;
+--						  mongoDB adiciona operadores novos a cada versão.
+--						  versãoDB 4.4 ($accumulator e $functio).
+
+
+/*       Agregação de propósito unico       */
+
+-- agregam documentos de uma unica coleção.
+	--* operações de agregações simples
+	--* menos flexível
+	
+-- metodos
+	--* Count
+		db.<nomeCollection>.count()
+		db.<nomeCollection>.count(<filtro>) = db.<nomeCollection>.find({<filtro>}).count()
+		db.cliente.count()
+		db.cliente.count({cidade:"São Paulo"})
+		db.cliente.find({cidade:"São Paulo"}).count
+		
+	--* Distinct
+		db.<nomeCollection>.distinct(<"atributo">)
+		db.cliente.count({nome})
+	
+	--* EstimatedDocumentCount (não usa um filtro de consulta e usa metadados para retornar a contagem de uma coleção).
+		db.<nomeCollection>.estimatedDocumentCount()
+		
+		
+/*       Agregação Pipeline      */
+
+-- Agrupar valores de vários documentos e executar operações nos dados agrupados para retornar um único resultado
+db.<nomeCollection>.aggregate([
+	{$<estagio>:<parâmetros>},
+	{$<estagio>:<operadoresExpressão>},
+	{$<estagio>:<parâmetros>,<operadoresExpressão>}
+])
+
+
+-- ESTAGIO: https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
+-- OPERADORES DE EXPRESSÃO: https://docs.mongodb.com/manual/reference/operator/aggregation/#aggregation-expression-operators
+
+
+----> Agregação MATCH
+	
+	--sintaxe
+	db.<nomeCollection>.aggregate([{$match: {<query>}}])
+	
+	--exemplo
+	db.funcionarios.aggregate([{$match: {status: "Ativo"}}])
+	
+	
+----> Agregação GROUP
+
+	--sintaxe
+	db.<nomeCollection>.aggregate({$group:{_id:"$<atributo>", 
+										<atributoNome>:{<acumulator1>:"$<atributoAgg>"},
+										...
+										}
+									})
+									
+	--exemplo
+	db.funcionarios.aggregate({$group: {_id: "$setor", total: {$sum: "$vendas"}}})
+	
+	--Acummulator
+		- $sum
+		- $avg
+		- $min
+		- $max
+		- $first
+		- $last
+		- $push
+		- $addToSet
+		- $stdDevPop
+		- $stdDevSamp
+	
+	
+	----> Agregação MATCH, GROUP, SORT, LIMITED
+	
+	--pipeline de agregação
+		-- match e group
+		db.funcionarios.aggregate([
+			{$match: {status:"Ativo"}},
+			{$group: {
+					_id: "$setor",
+					total: {$sum: "$vendas"},
+					media: {$avg: "$vendas"},
+					quantidade: {$sum: 1}
+			},
+			{$sort: {_id: 1}},
+			{$limit:10}
+			}
+		])

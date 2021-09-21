@@ -1,0 +1,32 @@
+-----------------------------------------------------------------
+-- Documentos com Data
+-----------------------------------------------------------------
+
+---> Tipos de Data e tempo
+	-- Date() :: retorna a data atual como string
+	-- new Date() :: retorna a data atual como objeto de data UTC (ISODate)
+	-- new Date("<YYYY-mm-ddTHH:MM:ssZ>") 
+	-- New Timestamp() :: retorna o timestamp atual
+	
+	-- exemplo
+	db.test.insertIne ({
+		ts: new Timestamp(),
+		date: new Date(),
+		data_string: Date(),
+		config_date: new Date("2020-08")
+	})
+	
+	
+---> Atualizar data de Documentos :: operador currentDate
+	-- setar um valor de data atual
+	-- {$currentDate: {<atributo>:$type:<tipo>}}
+		-- tipo: timestamp ou date
+		
+	-- exemplo
+	db.cliente.updateMany{
+		{idade: {$gt:27}},
+		{
+			$set: {seguro_carro: "baixo"},
+			$currentDate: {atualizado: {$type: "timestamp"}}
+		}
+	}

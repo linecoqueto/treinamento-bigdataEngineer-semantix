@@ -1,0 +1,49 @@
+-----------------------------------------------------------------
+-- OUTRAS OPÇÕES COM CONSULTAS
+-----------------------------------------------------------------
+
+---> Operador AND e OR
+
+	-- AND (default)
+		db.cliente.find( {"endereco.cidade":"São Paulo", idade:{$gte:18}} )
+		
+	-- OR
+		db.cliente.find( {$or: [ {"endereco.cidade":"São Paulo"}, {idade: {$gte: 18}} ] )
+		
+	-- AND E OR
+		db.cliente.find({
+							conhecimento: "Windows", {$or: [{"endereco.cidade":"São Paulo"}, {idade: {$gte:18}}]}
+						})
+						
+						
+---> Ordenando pesquisas :: função sort do metodo find
+
+	-- sintaxe
+		db.<nomeCollection>.find({...}).sort({<atributo>:<valor>})
+		
+	-- atributo
+		-- .sort({<atributo>:1}) :: ordenação ascendente
+		-- .sort({<atributo>:-1}) :: ordenação descendente
+		-- .sort({<atributo>:1, <atributo2>:1}) :: ordenação por N atributos
+		
+	-- exemplo
+		db.cliente.find({}).sort({"endereco.cidade":1, nome:1})
+		
+		
+---> Limitar pesquisas
+	
+	-- sintaxe
+		db.<nomeCollection>.find({...}).limit(<valor>)
+		
+		
+---> buscar 1 documento : findOne
+	
+	-- mais performatico que o find
+	-- farantir na saida sempre 1 documento
+	
+	-- sintaxe
+		db.<nomeCollection>.findOne({...})
+		
+	-- exemplo
+		db.cliente.findOne({nome:"Lucas},{_idade: 0})
+		

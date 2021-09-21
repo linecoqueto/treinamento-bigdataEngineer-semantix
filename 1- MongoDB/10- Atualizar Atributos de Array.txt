@@ -1,0 +1,23 @@
+-----------------------------------------------------------------
+-- Atualizar array do documento
+-----------------------------------------------------------------
+
+---> operador set
+	-- atualizar um elemento do array
+	-- o elemento que deseja atualizar deve estar no filtro
+	-- Operador $ - atualiza o primeiro elemento da pesquisa em relação ao filtro
+	
+	-- exemplo
+	db.cliente.updateOne(
+			{_id:2, "conhecimento":"Mongo"},
+			{$set: {"conhecimento.$":"MongoDB"}}
+	)
+	
+	
+---> operador pull e push
+	-- push: adicionar o elemento no array
+	-- pull: remover o elemento no array
+	
+	-- exemplo
+	db.cliente.updateOne({_id:2},{$push: {conhecimento:"Redis"}})
+	db.cliente.updateOne({_id:2},{$pull: {conhecimento:"Redis"}})
