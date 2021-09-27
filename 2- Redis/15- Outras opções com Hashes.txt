@@ -1,0 +1,21 @@
+-----------------------------------------------------------------
+-- OUTRAS OPÇÕES COM HASHES
+-----------------------------------------------------------------
+
+---> Incrementar valores nos campos
+		- hincreby <chave> <campo> <incremento>
+		
+---> obter o numero de campos
+		- hlen <chave>
+
+---> Obter o tamanho do valor de um campo
+		- hstrlen <chave> <campo>
+		
+---> Obter todos os campos da hash
+		- hkey <chave> <campo>
+		
+---> Obter todos os valores da hash
+		- hvals <chave>
+		
+---> Deletar o campo
+		- hdel <chave> <campo>

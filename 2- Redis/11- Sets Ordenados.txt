@@ -1,0 +1,18 @@
+-----------------------------------------------------------------
+-- ESTRUTURAS DE DADOS :: SETS ORDENADOS
+-----------------------------------------------------------------
+
+---> Sorted sets são compostos de elementos de strings unicos e não repetitivos	
+		- combinação de Set e HASHKEYS
+		- Também é um Set
+		
+---> Cada elemento é associado a um score
+		- Semelhante ao hash
+		
+---> Sintaxe
+		- Adicionar elementos
+			. zadd <chave> <score1> <valor1>...<scoreN> <valorN>
+			
+		- VIsualizar elementos em um intervalo na lista
+			. crescente: zrange <chave> <inicio> <fim> [withscores]
+			. decrescente: zrevrange <chave> <inicio> <fim> [withscores]

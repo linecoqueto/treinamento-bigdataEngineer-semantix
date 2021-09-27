@@ -1,0 +1,14 @@
+-----------------------------------------------------------------
+-- CONFIGURAÇÕES BASICAS
+-----------------------------------------------------------------
+
+---> Ler os parametros de configuração do servidor Redis em execução
+---> Os parametros podem ser configurados através do arquivo redis.conf
+
+---> Sintaxe  pelo terminal
+		- Ler um paramentro: config get <Parametro>
+		- Ler um padrão de parametros: config get <Parametros>*
+		- Ler todos os parametros: config get *
+		
+---> Exemplo
+		- config get appendonly

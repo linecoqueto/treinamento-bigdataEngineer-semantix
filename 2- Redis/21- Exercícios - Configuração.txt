@@ -1,0 +1,74 @@
+-----------------------------------------------------------------
+--1. Visualizar todos os parâmetros de configuração
+-----------------------------------------------------------------
+
+config get *
+
+-----------------------------------------------------------------
+--2. Verificar o parâmetro “appendonly”
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config get appendonly
+1) "appendonly"
+2) "yes"
+
+-----------------------------------------------------------------
+--3. Remover a persistência dos dados, alterando o parâmetro “appendonly” para “no”
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config set appendonly no
+OK
+127.0.0.1:6379> config get appendonly
+1) "appendonly"
+2) "no"
+
+-----------------------------------------------------------------
+--4. Verificar o parâmetro “save”
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config get save
+1) "save"
+2) ""
+
+-----------------------------------------------------------------
+--5. Adicionar a persistência dos dados, para a cada 2 minutos (120 segundos) se pelo menos 500 chaves forem alteradas, adicionando o parâmetro “save” para “120 500”
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config set save '120 500'
+OK
+127.0.0.1:6379> config get save
+1) "save"
+2) "120 500"
+
+-----------------------------------------------------------------
+--6. Verificar os parâmetros “maxmemory*”
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config get maxmemory*
+1) "maxmemory-policy"
+2) "noeviction"
+3) "maxmemory-samples"
+4) "5"
+5) "maxmemory-eviction-tenacity"
+6) "10"
+7) "maxmemory"
+8) "0"
+
+-----------------------------------------------------------------
+--7. Permitir que o Redis remova automaticamente os dados antigos à medida
+--que você adiciona novos dados,  com uso da politica “allkeys-lru”, quando chegar a 1mb de memória.
+-----------------------------------------------------------------
+
+127.0.0.1:6379> config set maxmemory-policy allkeys-lru
+OK
+127.0.0.1:6379> config set maxmemory 1mb
+OK
+127.0.0.1:6379> config get maxmemory*
+1) "maxmemory-policy"
+2) "allkeys-lru"
+3) "maxmemory-samples"
+4) "5"
+5) "maxmemory-eviction-tenacity"
+6) "10"
+7) "maxmemory"
+8) "1048576"

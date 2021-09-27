@@ -1,0 +1,29 @@
+-----------------------------------------------------------------
+-- Opções com chaves
+-----------------------------------------------------------------
+
+---> verificar se a chave existe
+	exists <chave>
+	
+---> deletar chave
+	del <chave>
+	
+---> tipo da chave
+	type <chave>
+
+-----------------------------------------------------------------
+-- Persistência de chaves
+-----------------------------------------------------------------
+	
+---> definir tempo para a chave expirar
+	- expire <chave><tempo segundos>
+	- pexpire <chave><tempo milissegundos>
+	- set <chave><valor> ex <tempo segundos>
+	- set <chave><valor> px <tempo milissegundos>
+	
+---> Verificar o tempo restante de vida da chave
+	- ttl <chave> (resposta em segundos)
+	- pttl <chave> (resposta em milissegundos)	
+	
+---> remover tempo para a chave expirar
+	- persist <chave>

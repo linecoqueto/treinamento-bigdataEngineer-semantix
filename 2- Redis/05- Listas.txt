@@ -1,0 +1,41 @@
+-----------------------------------------------------------------
+-- LISTAS
+-----------------------------------------------------------------
+
+---> Lista é uma sequencia de elementos ordenados
+		- linked list : tempo constante de inserção
+		
+---> Usos
+		- O Twitter leva os ultimos tweets postados por usuários nas listas do Redis
+		- Lembrete de últimas atualizações postadas por usuários em uma rede social
+		- Comunicação entre consumidor-produtor
+			. Produtor inseri elementos em uma lista e o consumidor consome esses itens e executa as ações
+		- Visualizar as fotos ou publicações mais recentes publicadas em uma rede social.
+		
+---> Adicionar um novo elemento na lista
+		- sintaxe
+			. No inicio (esquerda) da lista
+				LPUSH <chave><valor>
+				
+			. No final (direita) da lista
+				RPUSH <chave><valor>
+				
+---> Extrair elementos em um intervalo na lista
+		- sintaxe
+			. LRANGE <chave><inicio><fim>
+		
+		- inicia a lista em 0
+		- -1 ultimo, -2 penultimo, ....
+		
+---> Recuperar um elemento e eliminá-lo da lista
+		- sintaxe
+			. No inicio (esquerda) da lista
+				LPOP <chave>
+				
+			. No final (direita) da lista
+				RPOP <chave>
+				
+		- Retornar null quando não existir elementos
+		
+		
+				

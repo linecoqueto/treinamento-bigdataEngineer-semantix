@@ -1,0 +1,28 @@
+-----------------------------------------------------------------
+-- CONFIGURAÇÕES BASICAS - CACHE
+-----------------------------------------------------------------
+
+---> Documentação :: https://redis.io/topics/lru-cache
+
+---> Cache LRU (Least Recently Used)
+		- Permitir que o Redis remova automaticamente os dados antios
+			. conforme adicionar novos dados
+			
+---> Principais configurações
+		- maxmemory: configurar um limite de memória para o dataset
+		- maxmemory-policy: configurar a politica quando o limite de memória for atingido
+			. noeviction :: retorna erros quando o limite de memória é atingido
+			. allkeys-lru :: Remove as chaves menos usadas recentemente
+			. volatile-lru :: Remove as chaves menos usadas recentemente com expiração
+			. allkeys-random :: Remove as chaves aleatoriamente
+			. volatile-random :: Remove as chaves aleatoriamente com expiração
+			. volatile-ttl :: remove as chaves menos usadas recentemente com TTL menor
+
+---> Exemplo
+		- Permitir que remova automaticamente os dados antigos à medida que você adiciona novos dados:
+		
+CONFIG GET maxmemory
+CONFIG GET maxmemory-policy
+CONFIG SET maxmemory 2mb
+CONFIG SET maxmemory-policy allkeys-lru
+CONFIG GET maxmemory*

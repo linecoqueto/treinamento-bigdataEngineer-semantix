@@ -1,0 +1,26 @@
+-----------------------------------------------------------------
+-- ESTRUTURAS DE DADOS :: SETS
+-----------------------------------------------------------------
+
+---> Sets são coleções não ordenadas de strings
+		- Expressar relações entre objetos
+	
+	
+---> Sintaxe
+		- Adicionar elementos
+			. sadd <chave><valor1> ... <valorN>
+			
+		- Retornar todos os elementos
+			. smembers <chave>
+			
+		- Recuperar um elemento e remove-lo do set
+			. spop <chave><valor>
+		
+		- Verificar se um elemento existe
+			. sismember <chave><valor>
+			
+		- Visualizar o número de elementos
+			. scard <chave>
+			
+		- Remover um elemento 
+			. srem <chave><valor>

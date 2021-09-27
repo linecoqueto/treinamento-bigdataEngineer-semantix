@@ -1,0 +1,25 @@
+-----------------------------------------------------------------
+-- Entendimento Chave-Valor
+-- TIPOS DE DADOS
+-----------------------------------------------------------------
+
+---> Não é um armazenamento de chave-valor simples (string-string)
+
+---> Aceita estruturas de dados mais complexas
+	- Strings
+	- Listas
+	- Sets
+	- Sets Ordenados
+	- Hash
+	- HyperLogLogs
+	- Streams
+	
+---> As chaves são binary safe
+	- sequencia binária
+	- Regras
+		. Tamanho máximo 512 MB
+			* Não indicado chaves > 1MB
+			* Gastar memória e largura de banda
+		. Dicas
+			* Instanciar "object-type:id"
+				"user:1000" ao invés de "u1000"

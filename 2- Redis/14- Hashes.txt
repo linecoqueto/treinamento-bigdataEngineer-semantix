@@ -1,0 +1,20 @@
+-----------------------------------------------------------------
+-- ESTRUTURAS DE DADOS :: HASHES
+-----------------------------------------------------------------
+
+---> Hashes são pares de valor de campo
+		- representar objetos 
+		
+---> Sintaxe
+		
+		- Definir o valor de um campo de hash
+			. hmsert <chave> <campo1> <valor> ...
+		
+		- Obter o valor de um campo de hash
+			. hget <chave> <campo>
+
+		- Obter os valores dos campos de hash
+			. hmget <chave> <campo1> ...
+			
+		- Obter todos os campos e valores de uma hash
+			. hgetall <chave>

@@ -1,0 +1,34 @@
+-----------------------------------------------------------------
+-- Outras Opções com Listas
+-----------------------------------------------------------------
+
+---> Recuperar um elemento e eliminá-lo da lista
+		
+		- Bloquear se a lista estiver vazia até o tempo especificado
+			. Evitar respostas NULL
+			. Implementar uma fila
+				* lpush
+				* rpop
+				
+		- sintaxe
+			. No inicio (esquerda) da lista
+				BLPOP <chave><tempo>
+				
+			. No final (direita) da lista
+				BRPOP <chave><tempo>
+				
+		- Retornar Null quando não existir elementos e o tempo se esgotar
+		
+		
+---> Definir um novo intervalo para a lista	
+		
+		- sintaxe
+			ltrim <chave><novoInicio><novofim>
+		
+		- Removidos todos os elementos fora do intervalo
+		
+		
+---> Visualizar o tamanho da lista
+	
+		- sintaxe
+			llen <chave>

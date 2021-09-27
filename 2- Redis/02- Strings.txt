@@ -1,0 +1,34 @@
+-----------------------------------------------------------------
+-- STRINGS
+-----------------------------------------------------------------
+
+---> Unico tipo de dados Memcached
+		- Cache para páginas Web
+		
+---> Chaves também são string
+		- Mapear string para outra string
+		
+---> Sintaxe
+		- Definir um valor de string: SET <chave><valor>
+		- Recuperar um valor de string: GET <chave>
+		
+---> Opções para a chave string
+		- NX :: falhar se a chave existir
+		- XX (default) :: Substituir o valor da chave
+
+---> Verificar o tamanho do valor
+		- sintaxe: strlen <chave>
+		
+---> String como um inteiro
+		- sintaxe para incrementos e decrementos do valor
+			. incr <chave>
+			. decr <chave>
+			. incrby <chave><incremento>
+			. decrby <chave><incremento>
+			
+---> Definir e recuperar várias chaves em um comando
+		- Reduzir latência
+		
+		- Sintaxe
+			. MSET <chave1><valor><chave2><valor>...<chaveN><valor>
+			. MGET <chave1><chave2>...<chaveN>

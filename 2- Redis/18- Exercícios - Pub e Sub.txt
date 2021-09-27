@@ -1,0 +1,92 @@
+-----------------------------------------------------------------
+-- Exercícios - Pub/Sub
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+--1. Criar um assinante para receber as mensagens do canal noticias:sp
+-----------------------------------------------------------------
+
+127.0.0.1:6379> subscribe noticias:sp
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "noticias:sp"
+3) (integer) 1
+
+-----------------------------------------------------------------
+--2. Criar um editor para enviar as seguintes mensagens no canal noticias:sp
+--Msg 1
+--Msg 2
+--Msg 3
+-----------------------------------------------------------------
+
+127.0.0.1:6379> publish noticias:sp 'Msg 1'
+(integer) 1
+127.0.0.1:6379> publish noticias:sp 'Msg 2'
+(integer) 1
+127.0.0.1:6379> publish noticias:sp 'Msg 3'
+(integer) 1
+
+
+---- no outro terminal:
+
+127.0.0.1:6379> subscribe noticias:sp
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "noticias:sp"
+3) (integer) 1
+1) "message"
+2) "noticias:sp"
+3) "Msg 1"
+1) "message"
+2) "noticias:sp"
+3) "Msg 2"
+1) "message"
+2) "noticias:sp"
+3) "Msg 3"
+
+-----------------------------------------------------------------
+--3. Cancelar o assinante do canal noticias:sp
+-----------------------------------------------------------------
+
+unsubscribe
+^C
+
+-----------------------------------------------------------------
+--4. Criar um assinante para receber as mensagens dos canais com o padrão noticias:*
+-----------------------------------------------------------------
+
+127.0.0.1:6379> psubscribe noticias:*
+Reading messages... (press Ctrl-C to quit)
+1) "psubscribe"
+2) "noticias:*"
+3) (integer) 1
+
+-----------------------------------------------------------------
+--5. Criar um editor para enviar as seguintes mensagens no canal noticias:rj
+--Msg 4
+--Msg 5
+--Msg 6
+-----------------------------------------------------------------
+
+1) "pmessage"
+2) "noticias:*"
+3) "noticias:rj"
+4) "Msg 4- rj"
+1) "pmessage"
+2) "noticias:*"
+3) "noticias:rj"
+4) "Msg 5- rj"
+1) "pmessage"
+2) "noticias:*"
+3) "noticias:rj"
+4) "Msg 6- rj"
+
+
+---- no outro terminal:
+
+127.0.0.1:6379> publish noticias:rj 'Msg 4- rj'
+(integer) 1
+127.0.0.1:6379> publish noticias:rj 'Msg 5- rj'
+(integer) 1
+127.0.0.1:6379> publish noticias:rj 'Msg 6- rj'
+(integer) 1

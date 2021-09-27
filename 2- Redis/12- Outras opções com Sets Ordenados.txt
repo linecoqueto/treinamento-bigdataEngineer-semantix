@@ -1,0 +1,25 @@
+-----------------------------------------------------------------
+-- OUTRAS OPÇÕES COM SETS ORDENADOS
+-----------------------------------------------------------------
+
+---> Recuperar um elemento e remove-lo do set
+		- maior score : zpopmax <chave>
+		- menor score : zpopmin <chave>
+		
+---> Bloquear se o set estiver vazio até um determinado tempo tempo
+		- maior score : bzpopmax <chave> <t>
+		- menor score : bzpopmin <chave> <t>
+		
+---> Visualizar a posição de um elemento
+		- zrank <chave> <valor>
+		- zrevrank <chave> <valor>
+		
+---> Visualizar o score de um elementro
+		- zscore <chave> <valor>
+		
+---> Visualizar o numero de elementos
+		- zcard <chave>
+		
+---> Remover um elemento específico
+		- zrem <chave> <valor>
+		

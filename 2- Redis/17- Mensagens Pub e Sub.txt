@@ -1,0 +1,29 @@
+-----------------------------------------------------------------
+-- MENSAGENS PUB/SUB
+-----------------------------------------------------------------
+
+---> Implementar o paradigma de mensagens PUBlish/SUBscribe (publicar/Assinar)
+		- Mensagens dos remetente (editor) não são enviadas diretamente para um destinarario (assinante).
+		- Mensagens são publicadas através de um canal
+			. Sem o editor saber quem são os assinantes
+			
+---> Sintaxe
+		- Pulicar mensagem
+			. publish <canal> <mensagem>
+		
+		- Assinar um ou mais canais
+			. subcribe <canal1> ... <canalN>
+			
+---> Assinar canais através de um padrão : utilizar *
+		- psubscribe <padrão1> ... <padraoN>
+		
+---> Cancelar a assinatura dos canais
+		- canais especificos
+			. unsubscribe <canal1> ... <canalN>
+			
+		- todos os canais
+			. unsubscribe
+			
+---> Cancelar a assinatura dos canais através de um padrão
+		- punsubscribe <padrao1> ... <padraoN>
+		

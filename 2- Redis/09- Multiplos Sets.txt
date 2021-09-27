@@ -1,0 +1,17 @@
+-----------------------------------------------------------------
+-- ESTRUTURAS DE DADOS :: MÚLTIPLOS SETS
+-----------------------------------------------------------------
+
+---> Interseção de varios sets
+	. sinter <chave1> ... <chaveN>
+	
+---> Diferença de varios sets
+	. sdiff <chave1> ... <chaveN>
+	
+---> União de vários sets
+	. sunion <chave1> ... <chaveN>
+	
+---> Armazenar os multiplos sets em outra chave	
+	. sinterstore <chaveArmazenamento><chave1> ... <chaveN>
+	. sdiffstore <chaveArmazenamento><chave1> ... <chaveN> 
+	. sunionstore  <chaveArmazenamento><chave1> ... <chaveN>
