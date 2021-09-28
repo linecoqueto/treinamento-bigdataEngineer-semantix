@@ -1,13 +1,38 @@
-# Fundamentos de ETL com Python
+# Redis - Básico
 
-Praticando os comandos aprendidos nas aulas de Python, através do projeto de livre tema proposto.
+- Entendimento de conceitos e arquitetura NoSQL e Redis; 
+- Instalação de cluster Redis através de container;
+- Manipulação de diversos tipos de estrutura de dados com Redis-CLI;
+- Implementar paradigma de mensagens Pub/Sub;
+- Configurações básicas de persistência de dados;
+- Desafiar os estudantes na utilização desses novos conhecimentos com exercícios práticos.
 
-### Projeto desenvolvido através
-- Google Colab
+### Carga horária 12 horas
 
-### Fonte dos Dados
-- https://www.kaggle.com/jsppimentel99/focos-de-calor-no-brasil-20052020?select=Focos_BDQueimadas_2020
+### Badge
 
-
+https://badgr.com/public/assertions/eiFNNEynRVCiMa_YeDD-Jg
 
 
+### Realização dos exercício no docker:
+
+##### docker-compose.yml
+
+```sh
+version: '3.1'
+
+services:
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - data:/data
+    entrypoint: redis-server --appendonly yes
+    restart: always      
+
+volumes:
+  data:
+```
