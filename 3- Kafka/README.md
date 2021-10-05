@@ -1,4 +1,4 @@
-# Redis - Básico
+# Kafka - Básico
 
 - Entendimento de conceitos e arquitetura do Kafka e da Confluent; 
 - Instalação de cluster Kafka através de container; 
