@@ -1,0 +1,14 @@
+-----------------------------------------------
+-- PROXIMOS PASSOS
+-----------------------------------------------
+
+---1. Livro Kafka: The definitive Guide
+	https://www.confluent.io/resources/kafka-the-definitive-guide
+	
+	
+---2. Github da Confluent
+	https://github.com/confluentinc
+	
+	
+---3. Confluent Global Training
+	confluent.io/training

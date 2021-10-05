@@ -1,0 +1,79 @@
+-----------------------------------------------
+--Conceitos - KSQL Datagen
+-----------------------------------------------
+
+- Ferramenta de cli
+- Gerar dados de testes
+	. Para testar ambientes de desenvolvimento
+	
+- Testes
+	. Diferentes tópicos
+		* orders, users, pageviews
+	
+	. Diferentes formatos
+		* abro, json, delimited
+		
+	. Controlar a produção de mensagens
+		* Quantidade
+		* Taxa/s
+		
+	. Acessar por cont
+		* docker exec --it ksql-datagen bash
+		* ksql-datagen <argumentos>
+		
+	. Exemplo
+		* ksql-datagen help
+		
+		
+-----------------------------------------------
+--Propriedades com Containers
+-----------------------------------------------
+
+----> para leitura
+https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+
+
+----> Datagen - Argumentos - cluster em docker
+
+$ ksql-datagen \
+bootstrap-server=broker 29092 \
+quickstart=<order, users, pageviews> \
+schema=<ArquivoAvro> \
+schemaRegistryUrl =schema-registry:8081 \
+key-format=<avro, json ou delimited> \
+topic=<nomeTopico> \
+key=<campoChave> \
+iterations=<numeroLinhas> \
+msgRate=<TaxaMsg/Segundo>
+
+--- no arq docker-compose.yml
+...
+	broker:
+		...
+		environment:
+			kafka_listener_security_protocol_map:
+				plaintext:plaintext,
+				plaintext_host:plaintext
+			kafka_advertised_listeners:
+				plaintext://broker:29092,
+				plaintext_host://localhost:9092
+				
+				
+-----------------------------------------------
+--KSQL Datagen para Stream
+-----------------------------------------------
+
+- criação de dados no tópico orders_topic
+	ksql-datagen bootstrap-server=broker:29092 schemaRegistryUrl=schema-registry:8081 \
+	quickstart:orders topic=orders_topic
+	
+- visualizar dados no tópico orders_topic
+	print "orders_topic"
+	
+- criação do stream
+	create stream orders_filtrada (orderid int, orderunits double, address struct<city varchar, zipcode int>, 
+	ordertime varchar) with (kafka_topic='order_topic', value_format='JSON');
+	
+- visualização do stream
+	select * from orders_filtrada;
+	

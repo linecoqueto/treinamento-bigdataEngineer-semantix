@@ -1,0 +1,63 @@
+-----------------------------------------------
+-- KAFKA POR LINHA DE COMANDO
+-----------------------------------------------
+
+-----> Broker :: Container
+
+	- Comandos para acessar o Servidor Kafka
+		. docker exec -it broker bash
+		
+		. kafka-topics --version
+		
+		
+--> Comandos básicos
+
+	- listar topicos
+		. kafka-topics --bootstrap-server localhost:9092 --list
+		  OU
+		. kafka-topics --zookeeper localhost:2191 --list
+			
+	- Criar tópico
+		. kafka-topics --bootstrap-server localhost:9092 --topic <nomeTopico> --create \
+		  --partitions 3 --replication-factor 1
+		  		  
+	- Descrever tópico
+		. kafka-topics --bootstrap-server localhost:9092 --topic <nomeTopico> --' 
+
+	- Deletar topicos
+		. kafka-topics --bootstrap-server localhost:9092 --topic <nomeTopico> --delete
+		
+		
+-----> Producer - Console 
+
+	- Enviar dados
+		. kafka-console-producer --broker-list localhost:9092 --topic <nomeTopico>
+				
+	- Enviar dados para todos reconhecerem (Leader e ISR)
+		. Kafka-console-producer --broker-list localhost:9092 --topic <nome topico> --producer-property acks=all
+		
+		
+-----> Consumer - Console 
+
+	- Receber mensagens em tempo real
+		. Kafka-console-consumer --bootstrap-server localhost:9092 --topic <nomeTopico>
+				
+	- Receber mensagens desde a criação do tópico
+		. kafka-console-consumer --bootstrap-server localhost:9092 --topic <nomeTopico> --from-beginning
+				
+	- Criar grupo de consumidores
+		. kafka-console-consumer --bootstrap-server localhost:9092 --topic <nomeTopico> --group <nomeGrupo>
+			
+	- Listar grupos
+		. kafka-consumer-groups --bootstrap-server localhost:9092 --list
+		
+	- Descrever grupo	
+		. kafka-consumer-groups  --bootstrap-server localhost:9092 --describe --group <nomeGrupo>
+		
+	- Redefinir o deslocamento do mais antigo
+		. kafka-consumer-groups  --bootstrap-server localhost:9092 --group <nomeGrupo> \
+			--reset-offsets --to-earliest --execute --topic <nomeTopico>
+			
+	- Alterar o deslocamento
+		. kafka-consumer-groups  --bootstrap-server localhost:9092 --group <nomeGrupo> \
+			--reset-offsets --shift-by 2 --execute --topic <nomeTopico>

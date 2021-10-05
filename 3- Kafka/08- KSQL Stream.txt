@@ -1,0 +1,113 @@
+-----------------------------------------------
+-- KSQL Stream
+-----------------------------------------------
+
+- KSQL Stream é uma sequencia de dados estruturados
+
+- Caracteristicas
+
+	. Imutáveis
+		* apenas pode inserir dados, não atualizar ou excluir
+		
+	. Podem ser criados a partir de um tópico do kafka ou derivados de um stream existente
+		* Fornecer o formato dos valores armazenados no tópico
+		* Não inferi o formato de dados do tópico
+	
+- Comando para visualizar streams
+	. list streams;
+	
+-----------------------------------------------
+----> Criação de Stream
+-----------------------------------------------
+
+- Criar um stream
+	. create stream <nomeStream> (<campo><tipo>,<campo><tipo>,...,<campo><tipo>) with (
+	kafka_topic='<nomeTopic>', value_format='<format>', KEY='<campoChave>', TIMESTAMP='<campoTimestamp>...');
+	
+	. formato
+		* DELIMETED (, CSV)
+		* JSON
+		* AVRO
+		
+		
+----> Tipos de dados
+
+- BOOLEAN
+- INTERGER ou INT
+- BIGINT
+- DOUBLE
+- VARCHAR ou STRING
+- ARRAY
+- MAP
+- STRUCT
+
+
+----> Exemplo de criação de stream
+	create stream cad_str_csv (nome varchar, cidade varchar) with (kafka_topic='cadastro', value_format='delimited');
+
+-- Alterar formato de serialização de CSV/JSON para Avro
+	- criar um stream no formato avro que cria um novo tópico com os dados do stream no formato csv/json
+	- Ex. CSV para Avro
+		create stream cad_avro_csv with (kafka_topic='cadastro-avro', value_format='avro') as select * from cad_str;
+	- Ex. Json para Avro
+		create stream cad_str_json with (kafka_topic='cadastro-avro', value_format='avro') as select * from cad_str;
+
+-----------------------------------------------
+----> Operações com Stream
+-----------------------------------------------
+
+-- Comandos muito similar ao SQL.
+
+-- setar propriedades
+	. set <propriedades> = <valor>
+	
+-- desfazer propriedades
+	. unset <propriedades> = <valor>
+	
+-- Exemplo:
+	. Setar para visualizar os dados desde o inicio
+		set 'auto.offset.reset'='earliest';
+	
+	. Desfazer configuração
+		unset 'auto.offset.reset'
+		
+-- Inserção
+	insert into <stream_name|table_name> (<column_name>...<...>) values (<value>,<value>,<...>);
+	
+	insert into stream_name|table_name
+	select select_expr [...]
+	from from_stream
+	[where condition]
+	[partition by column_name];
+	
+	
+-- Deletar uma stream
+	drop stream <nomeStream>;
+	
+-- Deletar uma Stream e seu tópico
+	drop stream <nomeStream> delete topic;
+	drop stream if exists <nomeStream> delete topic;
+	
+	
+-----------------------------------------------
+----> Agreagações com Stream
+-----------------------------------------------
+
+-- Agregacoes
+	- count
+	- max
+	- min
+	- sum
+	- topk
+	- topkdistinct
+	
+
+-- contar a quantidade de linhas de um campo Stream
+	select <campo> count(*) from <nomeStream> group by <campo>;
+	
+	
+-- contar a quantidade de linhas de todo o tópico
+	- O count sempre precisa do group by
+		. Criar um campo setado para 1 em todos os registros
+		
+	* create stream <novoStream> AS SELECT 1 AS unit FROM <NomeStreamParaContar>;

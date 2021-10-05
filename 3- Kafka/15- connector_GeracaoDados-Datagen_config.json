@@ -1,0 +1,8 @@
+{
+  "name": "GeracaoDados-Datagen",
+  "config": {
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+    "kafka.topic": "topic-datagen",
+    "quickstart": "pageviews"
+  }
+}

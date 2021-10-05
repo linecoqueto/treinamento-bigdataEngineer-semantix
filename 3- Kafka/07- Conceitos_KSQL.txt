@@ -1,0 +1,43 @@
+-----------------------------------------------
+-----------------------------------------------
+--Conceitos :: KSQL
+-----------------------------------------------
+
+- Engine de Streaming SQL do Kafka
+- interface SQL interativa
+	. Facilidade de uso
+	. focada para o processamento streaming no kafka
+	. Sem a necessidade de escreve código em java ou python
+	
+- Escalavel
+- Tolerante a falhas
+- Tempo real
+- Suporta várias operações de streaming
+	. Filtragem de dados
+	. Transformações
+	. Agregações
+	
+----> para acessar via terminal
+	. docker exec -it ksqldb-cli bash
+	. ksql
+	OU
+	. docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
+	
+----> Comandos básicos
+
+- Visualizar tópicos
+	. list topics;
+	
+	print "users";
+	show streams;
+	show tables;
+	
+- Mostrar conteúdo do tópico em tempo real
+	. print "<nomeTopico>" <propriedades>;
+	. propriedades:
+		* from beginning;
+		* interval
+		* limit
+		
+- Exemplo
+	. print "topic-produto" from beginning interval 5 limit 10;

@@ -1,0 +1,27 @@
+-----------------------------------------------
+-- Conceitos - Control Center
+-----------------------------------------------
+
+----> Interface gráfica para monitoramento e gerenciamento do Confluent
+
+	- Monitoramento
+		. Brokers
+		. Tópicos
+		. Grupos de consumidores
+		. FLuxos de dados
+		
+	- Gerenciamento
+		. Conectores
+		. Cluster
+		. Tópicos
+	
+	- Criação de alertas
+	
+	- Desenvolvimento em KSQL
+	
+
+----> Acesso
+
+	http://localhost:9021/
+	
+	

@@ -1,0 +1,129 @@
+-----------------------------------------------
+-- Principais Parâmetros
+-----------------------------------------------
+
+---> Consumidor ::
+
+	- group.id :: nome do grupo de consumo
+	
+	- auto.offset.reset :: indica o que o kafka fará quando não temos um offset inicial (padrão latest)
+		. earliest
+		. latest
+		
+	- enable.auto.commit :: indica se o commit do offset será automático. (padrão true)
+	
+	- max.poll.interval.ms :: intervalo maximo de busca de dados. (padrão 5 min)
+	
+	- max.poll.records :: maximo de mensagens que serão retornadas no poll (padrão 500)
+	
+	- fetch.max.bytes :: qtd de dados que foram "capturadas" em cada poll (padrão 52 MB)
+	
+	
+---> Produtor ::
+
+	- linger.ms :: tempo de envio (padrão 0)
+	
+	- acks :: confirmação de gravação (padrão 1)
+	
+	- retries :: tentativas (padrao 2147483647)
+	
+	- compression.type :: tipo de compressão (padrão none)
+	
+	- max.inflight.requests.per.connection :: mensagens em voo (padrão 5)
+	
+	
+-----------------------------------------------
+-- Otimização de Parâmetros
+-----------------------------------------------
+
+---> Throughput
+
+	- Produtor
+		. linger.ms :: aumente para 10 - 100 (padrão 100)
+		. compression.type=Iz4 (padrão none)
+		. acks=1 (padrão 1)
+		. retries=0 (padrão 0)
+		. batch.size :: aumente para 100000 - 200000 (padrão 16384)
+		
+	- Consumidor
+		. fetch.min.bytes :: aumente para ~100000 (default)
+ 		
+---> Latencia
+	
+	- Produtor
+		. linger.ms=0 (padrão 0)
+		. compression.type=none (padrão none)
+		. acks=1 (padrão 1)
+
+	- Consumidor	
+		. fetch.min.bytes=1 (padrão 1)
+
+---> Durabilidade
+
+	- Produtor
+		. replication.factor: 3
+		. acks=all (padrão 1)
+		. retries: 1 ou mais (padrão 0)
+		. max.in.flight.requests.per.connection=1 (padrão 5)
+			* prevenir mensagens fora de ordem
+
+	- Consumidor
+		. enable.auto.commit=falso (padrão true)
+
+	- Broker
+		. default.replication.factor=3 (padrão 1)
+		. auto.create.topics.enable=false (padrão true)
+		. min.insync.replicas=2 (default 1)
+		. unclean.leader.election.enable=false (default true)
+
+---> Disponibilidade
+
+	- Broker
+		. unclean.leader.election.enable=false (default true)
+		. min.insync.replicas=2 (default 1)
+		. default.replication.factor=3 (padrão 1)		
+		
+	- Consumidor
+		. session.timeout.ms: baixar o quanto possivel (default 10000)
+		
+		
+-----------------------------------------------		
+--Melhores Práticas
+-----------------------------------------------
+
+---> Numero de partições : o numero de partições tem que ser multiplo do numero de brokers
+		- Exemplo
+			. 3 brokers ==> 6 partições (com isso teremos um bom balanceamento dos dados)
+			
+	-- Para determinar o numero de partições
+		. Throughput você quer atingir
+		. Quanto cada partição entrega
+			
+	-- Comandos
+		. kafka-consumer-perf-test.sh
+		. kafka-producer-perf-test.sh
+		. kafka-run-class.sh kafka-tools.TestEndToEndLatency
+		
+---> Balancemamento dos partições 
+	. Importante entender o comportamento dos seus dados
+		* manter uma uniformidade de crescimento entre as partições.
+		
+---> Tempo de Retenção
+	. Manter partições com 25GB (para facilitar o gerenciamento)
+	
+	. O tempo de retenção do Kafka
+		* SLA da aplicação
+		* Necessidade de reprocessamento
+		* Regra de negócio/Compliance
+		
+---> Criptografia e compressão (recomendação da Confluent)
+	. Não aplicar compressão ou criptografia no disco do brokers
+	. Aplique a compressão ou criptografia na mensagem
+	
+---> Monitoramento
+	. Utilização de disco
+	. Utilização de CPU
+	. Utilização de memória
+	. IO de disco
+	. IO de rede
+	. Arquivos abertos

@@ -1,0 +1,104 @@
+-----------------------------------------------
+--Exercícios - KSQL Datagen
+-----------------------------------------------
+
+docker exec --it ksql-datagen bash
+
+ksql-datagen
+
+-----------------------------------------------
+1. Criar o tópico users com os dados do ksql-datagen
+
+quickstart=users
+topic=users
+-----------------------------------------------
+
+ksql-datagen bootstrap-server=broker:29092 schemaRegistryUrl=schema-registry:8081 quickstart=users topic=users
+
+-----------------------------------------------
+2. Visualizar os dados do tópico no Ksql
+-----------------------------------------------
+
+docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
+
+ksql> print users from beginning limit 10;
+Key format: KAFKA_STRING
+Value format: JSON or KAFKA_STRING
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_9, value: {"registertime":1514111675998,"userid":"User_9","regionid":"Region_5","gender":"MALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_6, value: {"registertime":1498229383187,"userid":"User_6","regionid":"Region_5","gender":"FEMALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_9, value: {"registertime":1511981212917,"userid":"User_9","regionid":"Region_9","gender":"MALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_4, value: {"registertime":1511619062098,"userid":"User_4","regionid":"Region_3","gender":"MALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_1, value: {"registertime":1495825471764,"userid":"User_1","regionid":"Region_8","gender":"OTHER"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_9, value: {"registertime":1513047048775,"userid":"User_9","regionid":"Region_9","gender":"OTHER"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_5, value: {"registertime":1494230900757,"userid":"User_5","regionid":"Region_7","gender":"FEMALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_3, value: {"registertime":1491626804706,"userid":"User_3","regionid":"Region_4","gender":"MALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_9, value: {"registertime":1500935823877,"userid":"User_9","regionid":"Region_6","gender":"MALE"}
+rowtime: 10/4/21 12:51:39 PM UTC, key: User_9, value: {"registertime":1494655458148,"userid":"User_9","regionid":"Region_5","gender":"MALE"}
+
+
+ksql> show streams;
+
+ Stream Name         | Kafka Topic                 | Format
+---------------------------------------------------------------
+ KSQL_PROCESSING_LOG | default_ksql_processing_log | JSON
+ USUARIO_CSV         | msg-usuario-csv             | DELIMITED
+--------------------------------------------------------------
+
+-----------------------------------------------
+3. Criar o stream users_raw com os dados do tópico users com as seguintes propriedades
+
+kafka_topic='users’
+value_format='JSON’
+key = 'userid’
+timestamp='viewtime’
+-----------------------------------------------
+
+ksql> CREATE STREAM users_raw (userid VARCHAR, registertime BIGINT) WITH (KAFKA_TOPIC='users', VALUE_FORMAT='JSON', KEY='userid', TIMESTAMP='registertime');
+
+ Message
+----------------
+ Stream created
+----------------
+
+-----------------------------------------------
+4. Visualizar a estrutura da Stream  users_raw
+-----------------------------------------------
+
+ksql> show streams;
+
+ Stream Name         | Kafka Topic                 | Format
+---------------------------------------------------------------
+ KSQL_PROCESSING_LOG | default_ksql_processing_log | JSON
+ USERS_RAW           | users                       | JSON
+ USUARIO_CSV         | msg-usuario-csv             | DELIMITED
+---------------------------------------------------------------
+
+-----------------------------------------------
+5. Visualizar os dados da Stream  users_raw
+-----------------------------------------------
+
+select * from users_raw;
+
+-----------------------------------------------
+6. Repetir todo o proceso para o tópico pageviews
+
+ksql-datagen quickstart=pageviews topic= pageviews
+-----------------------------------------------
+
+-----> DATAGEN::
+
+ksql-datagen bootstrap-server=broker:29092 schemaRegistryUrl=schema-registry:8081 quickstart=pageviews topic=pageviews
+
+
+-----> KSQL
+
+ksql> CREATE STREAM page_views (userid VARCHAR, viewtime bigint) WITH (KAFKA_TOPIC='pageviews', VALUE_FORMAT='JSON', KEY='userid', TIMESTAMP='viewtime');
+
+ Message
+----------------
+ Stream created
+----------------
+
+
+
+

@@ -1,0 +1,70 @@
+-----------------------------------------------
+-- APACHE KAFKA
+-----------------------------------------------
+
+---> Plataforma de streaming distribuída
+
+	- Open Source
+	- Publicar e assina streams de registros
+	- Fluxos de registros
+		* Processar em tempo real
+		* Armazenar tolerando a falhas
+	
+	- O kafka não é somente uma mensageria.
+		* Ele não faz só o envio e processamento do registro, 
+	      ele também armazena
+		  
+	- O Kafka foi desenvolvido pelo linkdin em 2010.
+	
+	
+---> Kafka CLUSTER
+
+	- Desenvolvido em Scala e Java
+	- Executado como um cluster em um ou mais servidores 
+	  que podem abranger vários datacenter.
+	- O cluster Kafka armazena fluxos de registros em categorias,
+	  chamadas de TÓPICOS.
+	- Cada registro consiste em uma chave, um valor e um registro de data e hora.
+	- Kafka é um sistema de gerenciamento de fluxos de dados em tempo real, gerados a 
+	  partir de web sites, aplicações e sensores.
+	  
+	  
+---> API KAFKA
+
+	- Producer API
+		. Permite que um aplicativo publique um fluxo de registros e um ou mais tópicos do kafka.
+		
+	- Consumer API
+		. Permite que um aplicativo assine um ou mais tópicos e processe o fluxo de registros
+		  produzidos para eles.
+	
+	- Streams API
+		. Permite que um aplicativo transforme os fluxos de entrada em fluxos de saída.
+		
+	- Connector API
+		. Permite criar e executar produtores ou consumidores reutilizáveis que conectam tópicos 
+		  do Kafka a aplicativos ou sistemas de dados existentes.
+		  
+		  
+---> Confluent
+	
+	- Fundada em 2014, pelos criadores originais do Apache Kafka, o Jay Kreps.
+	- Plataforma de streaming
+		. uso corporativo
+		. infraestrutura de aplicativos e dados
+	
+	- Fornece uma plataforma única
+		. Eventos históricos 
+		. tempo real
+	
+	- Facilitar
+		. Construção de pipelines de dados
+		. Aplicativos de streaming em tempo real
+		. Integraçao de dados de várias fontes e locais
+		
+	- Simplificar
+		. Conexão de fontes de dados ao KAFKA
+		. Criação de aplicativos com KAFKA
+		. infraestrutura kafka (proteção, monitoramento e gerenciamento)
+		
+	

@@ -1,0 +1,131 @@
+-----------------------------------------------
+--Schema Registry
+-----------------------------------------------
+
+----> Conceitos
+
+	- camada de armazenamento distribuído para esquema avro
+	- mecanismo de armazenamento subjacente do kafka
+		. atribui um id exclusivo para cada esquema registrado
+	
+	- armazenamento e recuperação do esquema para produtores e consumidores
+	- diminuir a payload dos dados enviados para o kafka.
+	
+	
+----> Operações
+	
+	- Operações são feitas através de API REST
+	- Operações com os esquemas
+		. Adicionar
+		. Recuperar
+		. Atualizar
+		. Deletar
+	
+-----------------------------------------------
+--Formato AVRO
+-----------------------------------------------
+
+--> Estrutura de serialização de dados
+	- Escrito em json
+	- formato binário compacto (alto desempenho)
+	
+	
+--> vantagens
+	- Dados
+		. Digitados
+		. Comprimido automaticamente
+			* Usar abro tools para ler os dados
+		
+	- Documentação é embarcada no esquema
+	- Suportado pelo hadoop e diversas linguagens
+	- Evolução do esquema ao longo do tempo de forma segura
+	- Armazena o esquema através de json
+	
+	- campos padrões:
+			. Name :: nome do esquema
+			. Type :: tipo do esquema
+			. Namespace :: Equivalente ao package em java
+			. Doc :: Documentação do esquema
+			. Aliasses :: Outros nomes para o esquema
+			. Fields
+				* Name :: nome do campo
+				* Doc :: documentação do campo
+				* Type :: Tipo do campo
+				* Default :: valor padrão para o campo
+
+--> Exemplo 
+	-- inserir os campos : Id, nome, Status
+	
+	criamos o arquivo nomes.avsc
+	{
+			"type":"record",
+			"name":"nomes",
+			"Namespace":"example.avro"
+			"doc":"Exemplo de um esquema"
+			"fields":[
+				{"name":"id","type":"int"},
+				{"name":"nome","type":"string"},
+				{"name":"status","type":"boolean", "default":true}
+			]
+	
+	}
+	
+	
+-----------------------------------------------
+--AVRO CONSOLE CONSUMER
+-----------------------------------------------
+
+--> Avro Console Consumer permitir o consumo de dados do Kafka
+	- Não mostra todos os dados se usar kafka-console-consumer
+	
+--> Acessar o container do schema-registry
+	docker exec -it schema-registry bash
+	
+	
+--> Exemplo
+	--topic test-avro
+	--bootstrap-server broker:29092
+	--property schema.registry.url=http://localhost:8081
+	--from-beginning
+	
+	
+-----------------------------------------------
+--AVRO CONSOLE PRODUCER
+-----------------------------------------------
+
+--> Avro console Producer permitir o envio rapido de dados para o kafka manualmente
+	- Especificando o esquema no argumento 
+	
+--> Exemplo
+	kafka-avro-producer
+	--broker-list broker:29092
+	--topic test-avro
+	--property schema.registry.url=http:/localhost:8081
+	--property value.schema='{"type":"record","name":"myrecord","fields":[{"name":"id","type":"int},{"name":"nome","type":"string"}]}'
+
+{"id":1,"nome":"Aline"}
+
+
+-----------------------------------------------
+--EVOLUIR ESQUEMA
+-----------------------------------------------
+
+	- Necessário colocar o campo default
+	
+	
+-----------------------------------------------
+--STREAM DE AVRO
+-----------------------------------------------
+
+--> Criar stream para formato Avro
+
+	- O esquema já está no tópico Kafka
+		. Schema Registry
+		. Avro
+			* Dados
+			* Esquema
+			
+	- Precisa apenas configurar as propriedades do STREAM
+	
+	- Exemplo: 
+		create stream str_test-avro with (kafka_topic='test-avro',value_format='avro');

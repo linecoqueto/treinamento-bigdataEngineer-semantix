@@ -1,0 +1,146 @@
+-----------------------------------------------
+--Exercícios - Kafka por Linha de Comando
+-----------------------------------------------
+
+docker exec -it broker bash
+
+-----------------------------------------------
+--1. Criar o tópico msg-cli com 2 partições e 1 réplica
+-----------------------------------------------
+
+root@broker:/# kafka-topics --bootstrap-server localhost:9092 --create --topic msg-cli --partitions 2 --replication-factor 1
+Created topic msg-cli.
+
+-----------------------------------------------
+--2. Descrever o tópico msg-cli
+-----------------------------------------------
+
+root@broker:/# kafka-topics --bootstrap-server localhost:9092 --topic msg-cli --describe
+Topic: msg-cli  PartitionCount: 2       ReplicationFactor: 1    Configs:
+        Topic: msg-cli  Partition: 0    Leader: 1       Replicas: 1     Isr: 1  Offline:
+        Topic: msg-cli  Partition: 1    Leader: 1       Replicas: 1     Isr: 1  Offline:
+
+-----------------------------------------------
+--3. Criar o consumidor do grupo app-cli
+-----------------------------------------------
+
+root@broker:/# kafka-console-consumer --bootstrap-server localhost:9092 --topic msg-cli --group app-cli
+
+-----------------------------------------------
+--4. Enviar as seguintes mensagens do produtor
+--Msg 1
+--Msg 2
+-----------------------------------------------
+
+root@broker:/# kafka-console-producer --broker-list localhost:9092 --topic msg-cli
+>Msg 1
+>Msg 2
+
+-----------------------------------------------
+--5. Criar outro consumidor do grupo app-cli
+-----------------------------------------------
+
+kafka-console-consumer --bootstrap-server localhost:9092 --topic msg-cli --group app-cli
+
+-----------------------------------------------
+--6. Enviar as seguintes mensagens do produtor
+--Msg 4
+--Msg 5
+--Msg 6
+--Msg 7
+-----------------------------------------------
+
+--ok 
+
+-----------------------------------------------
+--7. Criar outro consumidor do grupo app2-cli
+-----------------------------------------------
+
+kafka-console-consumer --bootstrap-server localhost:9092 --topic msg-cli --group app2-cli
+
+-----------------------------------------------
+--8. Enviar as seguintes mensagens do produtor
+--Msg 8
+--Msg 9
+--Msg 10
+--Msg 11
+-----------------------------------------------
+
+--ok 
+
+-----------------------------------------------
+--9. Parar o app-cli
+-----------------------------------------------
+
+--ok 
+
+-----------------------------------------------
+--10. Definir o deslocamento para -2 offsets do app-cli
+-----------------------------------------------
+
+root@broker:/# kafka-consumer-groups --bootstrap-server localhost:9092 --group app-cli --reset-offsets --shift-by -2 --execute --topic msg-cli
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET
+app-cli                        msg-cli                        0          5
+app-cli                        msg-cli                        1          4
+
+-----------------------------------------------
+--11. Descrever grupo
+-----------------------------------------------
+
+root@broker:/# kafka-consumer-groups --bootstrap-server localhost:9092 --group app-cli --describe
+
+Consumer group 'app-cli' has no active members.
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+app-cli         msg-cli         0          5               7               2               -               -               -
+app-cli         msg-cli         1          4               6               2               -               -               -
+
+-----------------------------------------------
+--12. Iniciar o app-cli
+-----------------------------------------------
+
+root@broker:/# kafka-console-consumer --bootstrap-server localhost:9092 --topic msg-cli --group app-cli
+Msg 12
+Msg 14
+Msg 11
+Msg 13
+
+-----------------------------------------------
+--13. Redefinir o deslocamento o app-cli
+-----------------------------------------------
+
+root@broker:/# kafka-consumer-groups --bootstrap-server localhost:9092 --group app-cli --reset-offsets --to-earliest --execute --topic msg-cli
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET
+app-cli                        msg-cli                        0          0
+app-cli                        msg-cli                        1          0
+
+-----------------------------------------------
+--14. Iniciar o app-cli
+-----------------------------------------------
+
+root@broker:/# kafka-console-consumer --bootstrap-server localhost:9092 --group app-cli --topic msg-cli
+Msg 1
+Msg 4
+Msg 6
+Msg 8
+Msg 10
+Msg 12
+Msg 14
+Msg 2
+Msg 5
+Msg 7
+Msg 9
+Msg 11
+Msg 13
+
+-----------------------------------------------
+--15. Listar grupo
+-----------------------------------------------
+
+root@broker:/# kafka-consumer-groups --bootstrap-server localhost:9092 --list
+app2-cli
+_confluent-controlcenter-5-5-2-1
+_confluent-controlcenter-5-5-2-1-command
+app-cli

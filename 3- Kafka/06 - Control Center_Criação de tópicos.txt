@@ -1,0 +1,35 @@
+-----------------------------------------------
+-- Control Center :: Criação de Tópicos
+-----------------------------------------------
+
+----> Configurações dos Tópicos
+
+	- Configuração simples
+		. nome
+		. partição
+		
+	- Outras configurações
+		. Availability
+		. Cleanup policy
+			* Politica para limpar :: Deletar ou compactar
+			* Execução :: tempo e tamannho
+			
+		. Message size
+			* Tamanho máximo de mensagem.
+			
+	- Disponibilidade
+		. Maxima
+			* fator de replicação: 3
+			* minimo de replicas de sincronização: 1
+
+		. Equilibrada
+			* fator de replicação: 3
+			* minimo de replicas de sincronização: 2
+			
+		. Moderada
+			* fator de replicação: 2
+			* minimo de replicas de sincronização: 1
+			
+		. Baixa (Não usar em produção)
+			* fator de replicação: 1
+			* minimo de replicas de sincronização: 1

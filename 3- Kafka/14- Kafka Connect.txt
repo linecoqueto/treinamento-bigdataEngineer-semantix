@@ -1,0 +1,33 @@
+
+-----------------------------------------------
+--Kafka Connect
+-----------------------------------------------
+
+- Componente open-source do kafka
+
+- Estrutura para conectar o Kafka a sistemas externos
+	. Banco de dados
+	. Indices de pesquisa
+	. Sistemas de arquivo
+	
+- Principais tipos de conectores
+	. Source connector: Enviar dados do sistema externo para os topicos do kafka
+	. Sink connector: Enviar os dados do tópico Kafka para o sistema externo
+
+- Execução
+	. Processo autonomo para executar tarefas em uma unica maquina.
+	. serviço distribuído, escalável e tolerante a falhas.
+	
+- Repositorio de conectores da Confluent
+	https://www.confluent.io/hub/
+	
+- Instalar componentes
+	. docker exec -it connect bash
+	. confluent-hub install <componente>
+	
+	
+-----------------------------------------------
+--Adicionar Conector
+-----------------------------------------------
+
+- adicionar novo conector via control center

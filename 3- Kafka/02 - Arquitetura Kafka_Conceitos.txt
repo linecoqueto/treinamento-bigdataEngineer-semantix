@@ -1,0 +1,61 @@
+-----------------------------------------------
+-- ARQUITETURA KAFKA - CONCEITOS
+-----------------------------------------------
+
+-----> Brokers e Tópicos
+
+---> Arquitetura
+	- broker : servidor, onde estarão meus dados armazenados
+	- zookeeper : responsável pela coordenação
+	- produtor : enviando dados
+	- consumidor : recebendo dados
+	
+	
+---> Broker : dentro dele eu tenho os tópicos.
+		
+	** Tópicos são responsáveis por receber os fluxos de registros.
+		- Similar a uma tabela (SQL)
+		- Divididos em partições
+			. Local onde as mensagens são gravadas
+			. Sequencia ordenada e imutável de registro
+			. Cada registro na partição é atribuído a um id sequencial (offset - exclusivo para cada partição)
+		
+		- multi-assinantes
+			. 0, 1, ou muitos consumidores acessam os dados gravados.
+			
+	** Brokers :: conceitos
+		- corretores
+		- armazenam os tópicos
+		- cluster kafka é composto por multiplos corretores (servidores)
+			. ambientes de produção ter no minimo 3
+		- corretor é identificado por um id
+		
+	** Replicação dos tópicos
+		- Boa prática para cada partição
+			. 1 corretor líder (Leader) :: receber os dados
+			. 2 corretores de réplica do líder (ISR - in-sync-replica) :: sincronizar os dados
+	
+	
+---> Producers : envia os dados para o cluster Kafka.
+
+	- Publicar dados nos tópicos de sua escolha
+	- Escolher qual registro atribuir a qual partição dentro do tópicos
+		. Balancear a carga
+		. Chave no registro
+		
+	- Existem 3 tipos de confirmação de escrita (acks) para o produtor
+		. 0 - sem confirmação de escrita :: indicado quando a perca do meu dado não tem importancia.
+		. 1 - confirmação de escrita no líder (padrão) 
+		. ALL - confirmação de escrita no líder e nas replicas (ISR) :: usado para garantir 100% da escrita.
+		
+
+---> Consumers : responsáveis por receber os dados
+
+	- Cada registro publicado em um tópicos
+		. Entregue aos consumidores dentro de grupo de consumidores
+		
+	** Grupo de consumidores
+		- Se todas as instancias do consumidor tiverem no mesmo grupo de consumidores
+			. registros serão balanceados por carga
+		- Se todas as instancias do consumidor tiverem em grupo de consumidores diferentes
+			. cada registro será transmitido para todos os processos
