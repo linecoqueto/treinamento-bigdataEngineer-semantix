@@ -5,6 +5,6 @@ Repositório referente ao Treinamento Big Data Engineer da Semantix
 #### MongoDB - Básico ✅
 #### Redis - Básico ✅ 
 #### Kafka - Básico ✅
-#### Elastic Essential I
+#### Elastic Essential I ✅
 #### Spark - Big Data Processing
 
