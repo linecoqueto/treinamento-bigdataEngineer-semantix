@@ -1,0 +1,100 @@
+-----------------------------------------------
+-- API DE INDEX
+-----------------------------------------------
+-----------------------------------------------
+---> Gerenciamento de indices
+-----------------------------------------------
+
+		- Create index
+		- get index
+		- indices exists
+		- delete index
+		- open/close index API
+		
+
+-----------------------------------------------
+---> Criação de index
+-----------------------------------------------
+
+	- configuração basica
+	
+		PUT teste
+		{
+			"settings":{
+				"index":{
+					"number_of_shards":1,
+					"number_of_replicas":1
+				}
+			},
+			"mappings":{...},
+			"aliases":{}
+		}
+		
+	- boa prática: cada shard ter entre 20GB a 50GB. (Não é uma regra)
+		. Precisa testar o indice para saber o valor ideal
+	
+	
+-----------------------------------------------
+---> Busca de index
+-----------------------------------------------
+		
+	- Consultar indice
+		. GET teste (busca apenas os metadados dos indices)
+		. GET teste/_search
+		. GET teste/_settings
+		. GET teste/_mapping
+		. GET teste/_alias
+		. GET teste/_stats
+		
+	- Verificar se o indice existe
+		. HEAD teste
+		
+
+-----------------------------------------------		
+---> Remover index
+-----------------------------------------------
+
+	- Deletar um indice
+		PUT teste1
+		DELETE teste1
+		
+	- Deletar multiplos indices
+		PUT indice1
+		PUT indice2
+		PUT indice3
+		PUT indice4
+		PUT indice5
+		GET ind*
+		
+		DELETE ind*
+		
+		HEAD ind*
+		
+
+-----------------------------------------------		
+---> Fechamento e Abertura de index
+-----------------------------------------------
+
+--> Fechar indice
+	
+	- Diminuir sobrecarga no clustes 
+		. Manter metadados
+		
+	- Bloquear
+		. Leitura
+		. Gravação
+		
+	- Não manter por muito tempo
+		. Quando um nó deixar o cluster (as cópias serão perdidas)
+		. Solução: Frozen Index
+		
+	- Exemplo
+		. POST teste/_close
+		. POST test*/_close
+		
+		
+--> Abrir indice	
+		. POST teste/_open
+		. POST test*/_open
+		
+		

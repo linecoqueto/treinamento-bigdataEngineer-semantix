@@ -1,0 +1,25 @@
+-----------------------------------------------
+-- API DE INDEX
+-----------------------------------------------
+-----------------------------------------------
+---> Reindex
+-----------------------------------------------
+
+- Alterar o mapeamento
+
+- Forma básica para reindexar
+	. Configura o novo indice
+	. Indexa o indice de entrada (source) para o destino (dest)
+	
+- Exemplo
+
+	POST _reindex
+	{
+		"source":{
+			"index":"teste1"
+		},
+		"dest":{
+			"index":"new_teste"
+		}
+	}
+	

@@ -1,0 +1,39 @@
+-----------------------------------------------
+-- Exercícios - Logstash
+-----------------------------------------------
+-----------------------------------------------
+1. Enviar o arquivo <local>/paris-925.logs  para o Logstash, com uso do Filebeat.
+-----------------------------------------------
+
+ok
+
+-----------------------------------------------
+2. Configurar e executar o logstash com as seguintes configurações
+
+Entrada:
+beats {
+            port => 5044
+
+        }
+
+Saída:
+elasticsearch {
+            hosts => [ “elasticsearch:9200" ]
+
+            index => “seu_nome-%{+YYYY.MM.dd}"
+
+        }
+-----------------------------------------------
+
+ok
+
+GET _cat/indices
+
+-----------------------------------------------
+3. Verificar a quantidade de documentos do índice criado pelo Logstash e visualizar seus 10 primeiros documentos
+-----------------------------------------------
+
+GET aline-2021.10.18/_count
+
+
+GET aline-2021.10.18/_search

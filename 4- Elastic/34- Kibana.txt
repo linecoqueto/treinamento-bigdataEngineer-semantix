@@ -1,0 +1,111 @@
+-----------------------------------------------
+--  KIBANA
+-----------------------------------------------
+-----------------------------------------------
+-- Menu Kibana
+-----------------------------------------------
+----> Discover
+		- Acessar, pesquisa e filtrar dados do indice selecionado
+		- detalhes de campos da pesquisa
+		- salvar pesquisas para usar no discover, visualizações e dashboards.
+		
+
+----> Visualize
+		- criar, editar se salvar visualizações dos dados
+			. consultas
+			. filtros
+			. agregações
+			
+
+		- Tipos de visualizações
+			. area
+			. pizza
+			. linha
+			. metrica
+			. bolha
+			  ...
+			  
+			  
+----> Dashboard
+		- Combinar varias visualizações de dados em um unico lugar.
+		
+		
+----> Canvas
+		- Visualização e apresentação de dados
+			. Paginas
+			. Combinação (cores, imagens, texto)
+			
+----> Maps
+		- Analisar dados geografico em tempo real
+			. Mapas com várias camadas e indices
+			. carregar arquivos GeoJSON
+			
+			
+----> Machine Learning
+		- Gerenciamento de Jobs
+			. Detector de anomalias
+		- Carregamento de dados
+		
+		
+-----------------------------------------------
+-- Menu Enterprise Search
+-----------------------------------------------
+
+----> Criar pesquisas insights
+
+		- App Search :: Fornecer ferramentas para projetas e implantar uma pesquisa
+						poderosa em seus sites e aplicativos móveis.
+						
+		- Workplace Search :: Unificar suas plataformas de conteúdo (Google Drive, Salesforce)
+							  em uma experiencia de pesquisa personalizada.
+							  
+							  
+-----------------------------------------------
+-- Menu Observability
+-----------------------------------------------
+
+----> Observabilidade está associada aos Beats (usado para receber os dados que estou enviado para elasticSearch),
+	  está em observar todos esses logs que estou recebendo.
+	  
+		- Logs:: logs em tempo real
+			. Filebeat
+			. Visualizar campos dos logs
+			. VIsualizar no Uptime
+			
+		- Metrics :: Metricas em tempo real 
+			. Metricbeat
+			
+		- APM :: Application Performance Monitoring
+			. Permitir monitorar o desempenho de milhares de aplicativos em tempo real.
+			
+		- Uptime :: Monitoramento em tempo real		
+			. Heartbeat
+
+-----------------------------------------------
+-- Menu Security
+-----------------------------------------------
+
+----> SIEM :: Security Information & Event Management (nome antigo)
+
+	- Analise de eventos de segurança relacionados ao host e a rede
+		. Investigações de alertas
+		. Procura de ameaças
+		
+
+-----------------------------------------------
+-- Menu Management
+-----------------------------------------------
+
+	- Dev Tools :: Digitar request e envia-las ao Elasticsearch
+	
+	- Stack Monitoring 
+		. Armazenamento (disco, memoria, heap)
+		. Saude (Shards primarios, Shards replicas)
+		
+	- Management
+		. Gestão dos indices (saude, configurações, ciclo de vida, backup)
+		. Index para visualizações (index pattern)
+		. Configurações do kibana
+		. Segurança e regras de usuário
+		
+	

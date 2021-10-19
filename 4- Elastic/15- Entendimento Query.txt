@@ -1,0 +1,94 @@
+-----------------------------------------------
+--Queries e Filtros
+-----------------------------------------------
+
+-----------------------------------------------
+---> Como fazer as buscas?
+-----------------------------------------------
+
+	- Queries
+		. Quão bem a busca corresponde com o documento
+		
+		. Caracteristicas
+			* Tem score
+			* Não são armazenados na cache
+			
+	- Filtros (coisas exatas!)
+		. A busca corresponde com o documento
+			* Sim ou Não
+			
+		. Caracteristicas
+			* Não possui score (order by)
+			* Armazenados em cache automaticamente (acelerar o desempenho)
+			
+-----------------------------------------------		
+---> Indice Invertido
+-----------------------------------------------
+	
+	- Indice remissivo
+		. As páginas que estão localizados os principais termos
+	
+-----------------------------------------------	
+---> Queries Tipos
+-----------------------------------------------
+
+	- Query DSL 
+	
+	- Todas as queries calculam o "_score"
+		. Se não, utilizar o "constant_score"
+		
+	- Filtrar os dados antes da busca textual
+		. Ganhar desempenho
+		
+	* Term
+	* Terms
+	* Range
+	* Match
+	* Exists
+	* Missing
+	* Prefix
+	* Wildcard
+	* Regexp
+	* Fuzzy
+	* ids
+	
+	
+-- Exemplo Query :: Term
+	GET cliente/_search
+	{
+		"query":{
+			"term":{
+				"nome":"joão"
+			}
+		}
+	}
+	
+ - Qual o "took" e o "_score"?
+	. Essas são informações importantes que sempre devo olhar.
+	. took = tempo que demorou para a query retornar.
+	
+
+-- Exemplo Query :: Term com constant_score (vou ganhar performance em grande volumes)
+	GET cliente/_search
+	{
+		"query":{
+			"constant_score":{
+				"filter":{
+					"term":
+					{
+						"nome":"joão"
+					}
+				}
+			}
+		}
+	}
+
+-- Exemplo Query :: Terms (usado para multiplos "parametros")
+	GET cliente/_search
+	{
+		"query":{
+			"terms":{
+				"idade":[30,20]
+			}
+		}
+	}

@@ -1,0 +1,60 @@
+-----------------------------------------------
+-- LIMITAÇÃO E PAGINAÇÃO
+-----------------------------------------------
+
+---> Para pesquisas com muitos documentos
+
+	. Dificil visualização
+	. Limitar a quantidade de documentos
+		* size = numero de documentos
+	
+	. Paginação
+		* from = documento que irá visualizar
+		
+	. Resposta máxima
+		* from + size <= index.max_result_window (10.000)
+		* scroll :: Uma saída para documentos maiores que 10k usar essa opção.
+		
+	. Limitar o numero de documentos
+		* GET cliente/_search?q=hadoop&size=100
+		
+	. Paginação, visualizar x documentos por paginação
+		* GET cliente/_search?q=hadoop&size=100&from=500
+		
+	. Paginação na estrutura na busca
+		GET cliente/_search
+		{
+			"from":0, "size":10,
+			"query":{
+				...
+			}
+		}
+		
+---> Exemplo
+
+	- Mostrar os 10 primeiros documentos (1º pagina)
+		GET _search?&size=10
+		{
+			"query":{
+				"match_all":{}
+			}
+		}
+
+	- Mostrar os documentos de 31 a 40 (4º pagina)
+		GET _search?&size=10&from=30
+		{
+			"query":{
+				"match_all":{}
+			}
+		}
+		
+	** Paginação	
+		. Ex com paginação de 10 documentos:
+			* 1º pagina :: size=10 & from = 0 (default)
+			* 2º pagina :: size=10 & from = 10
+			* 10º pagina :: size=10 & from = 90
+			
+	** Formula
+		. Primeiro documento da busca = from +1
+		. Ultimo documento da busca = from + size
+		. Pagina que estou = from / size + 1

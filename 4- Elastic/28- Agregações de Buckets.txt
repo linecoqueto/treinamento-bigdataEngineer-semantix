@@ -1,0 +1,116 @@
+-----------------------------------------------
+--Agregações de Buckets
+-----------------------------------------------
+
+---> Separar em porcentagem
+---- Mediana do campo qtd
+
+	GET cliente/_search
+		{
+			"aggs":{
+				"mediana":{
+					"percentiles":{
+						"field":"qtd",
+						"percents": [25,50,75,100]
+					}
+				}
+			}
+		}
+		
+		
+---> por Tempo
+---- Agrupar valores por um intervalo :: DATE_HISTOGRAM
+
+	GET logs_servico/_search
+	{
+		"size":0,
+		"aggs":{
+			"logs_por_dia":{
+				"date_histogram":{
+				"field":"@timestamp",
+				"calendar_interval":"day"
+				}
+			}
+		}
+	}
+	
+	
+	-- Opções:
+		. "calendar_interval":"month"
+		. "fixed_interval":"10m"
+			** medidas: ms, s, m, h, d, w, M, q, y
+			
+			
+---> por Tempo
+---- Agrupar valores por um valor especifico :: HISTOGRAM
+
+	GET logs_servico/_search
+	{
+		"size":0,
+		"aggs":{
+			"logs_cada_100ms":{
+				"histogram":{
+				"field":"runtime_ms",
+				"interval":100
+				}
+			}
+		}
+	}
+	
+	
+---> por Intevalo
+
+	GET cliente/_search
+	{
+		"query":{...},
+		"size":0,
+		"aggs":{
+			"intervalo":{
+				"range":{
+				"field":"qtd",
+				"range":[
+					{"to":5},
+					{"from":5, "to":20},
+					{"from":20}
+					]
+				}
+			}
+		}
+	}
+	
+	
+---> por Intervalo de Data
+
+	GET cliente/_search
+	{
+		"query":{...},
+		"aggs":{
+			"intervalo_data":{
+				"date_range":{
+				"field":"date",
+				"range":[
+					{"from":2019-01-01, "to":2019-05-01}
+					]
+				}
+			}
+		}
+	}
+	
+	
+---> por Atributo
+---- Especificar o campo e a quantidade de valores (valores com a maior relevancia)
+
+--- Exemplo as 5 maiores cidades que visitaram o site
+
+	GET log_servico/_search
+	{
+		"size": 0,
+		"aggs":{
+			"cidade_views":{
+				"terms":{
+				"field":"cidade.keyword",
+				"size":5
+				}
+			}
+		}
+	}

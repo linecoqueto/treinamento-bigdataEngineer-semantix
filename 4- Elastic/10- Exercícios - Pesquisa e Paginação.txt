@@ -1,0 +1,245 @@
+-----------------------------------------------
+-- EXERCÍCIOS - PESQUISA E PAGINAÇÃO
+-----------------------------------------------
+
+-----------------------------------------------
+1. Pesquisar no índice produto os documentos com os seguintes atributos:
+-----------------------------------------------
+-----------------------------------------------
+a) Nome = mouse
+-----------------------------------------------
+
+GET produto/_search?q=nome:mouse
+{
+	"query":{
+		"match_all":{}
+	}
+}
+
+--
+
+{
+  "took" : 11,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0925692,
+    "hits" : [
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "1",
+        "_score" : 1.0925692,
+        "_source" : {
+          "nome" : "mouse",
+          "qtd" : 50,
+          "descricao" : "com fio USB, compatível com Windows, Mac e Linux"
+        }
+      }
+    ]
+  }
+}
+
+-----------------------------------------------
+b) Quantidade = 30
+-----------------------------------------------
+
+GET produto/_search?q=qtd:30
+{
+	"query":{
+		"match_all":{}
+	}
+}
+
+--
+
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "3",
+        "_score" : 1.0,
+        "_source" : {
+          "nome" : "memória ram",
+          "qtd" : 30,
+          "descricao" : "8GB, DDR4"
+        }
+      }
+    ]
+  }
+}
+
+-----------------------------------------------
+c) Descrição = USB
+-----------------------------------------------
+
+GET produto/_search?q=descricao:"USB"
+{
+  "query":{
+    "match_all":{}
+  }
+}
+
+--
+
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 0.43002224,
+    "hits" : [
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "1",
+        "_score" : 0.43002224,
+        "_source" : {
+          "nome" : "mouse",
+          "qtd" : 50,
+          "descricao" : "com fio USB, compatível com Windows, Mac e Linux"
+        }
+      },
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "2",
+        "_score" : 0.39019167,
+        "_source" : {
+          "nome" : "hd",
+          "qtd" : 20,
+          "descricao" : "Interface USB 2.0, 500GB, Sistema: Windows 10, Windows 8, Windows 7 "
+        }
+      }
+    ]
+  }
+}
+
+-----------------------------------------------
+d) Nome = hd e descrição = windows
+-----------------------------------------------
+
+
+GET produto/_search?q=nome:hd&q=descricao:windows
+{
+  "query":{
+    "match_all":{}
+  }
+}
+
+---
+
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 0.667102,
+    "hits" : [
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "2",
+        "_score" : 0.667102,
+        "_source" : {
+          "nome" : "hd",
+          "qtd" : 20,
+          "descricao" : "Interface USB 2.0, 500GB, Sistema: Windows 10, Windows 8, Windows 7 "
+        }
+      },
+      {
+        "_index" : "produto",
+        "_type" : "_doc",
+        "_id" : "1",
+        "_score" : 0.43002224,
+        "_source" : {
+          "nome" : "mouse",
+          "qtd" : 50,
+          "descricao" : "com fio USB, compatível com Windows, Mac e Linux"
+        }
+      }
+    ]
+  }
+}
+
+
+-----------------------------------------------
+e) Nome = memória e descrição = GB
+-----------------------------------------------
+
+GET produto/_search?q=nome:memória&q=descricao:GB
+{
+  "query":{
+    "match_all":{}
+  }
+}
+
+--
+
+{
+  "took" : 0,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 0,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  }
+}
+
+-----------------------------------------------
+2. Pesquisar todos os índices, limitando a pesquisa em 5 documentos 
+em cada página e visualizar a 4 página (Documentos entre 16 á 20 )
+-----------------------------------------------
+
+GET _all/_search?size=5&from=15

@@ -1,0 +1,81 @@
+-----------------------------------------------
+-- OPERAÇÕES BÁSICAS
+-----------------------------------------------
+
+---> HEAD
+
+	- Retorna apenas o cabeçalho do Http 
+	- Saber se o documento existe
+		
+	- Exemplo:
+		. Curl
+			* ferramenta de linha de comando
+			* biblioteca para transferir dados com URLs
+			* curl -XHEAD -v http://localhost:9200/client/_doc/1
+			
+		. Kibana
+			* Opção: Dev Tools
+			* HEAD cliente/_doc/1
+
+---> PUT
+
+	- Criar ou reindexar um documento inteiro (_version)
+	
+	- Exemplo:
+		PUT cliente/_doc/1
+		{
+			"nome":"Aline",
+			"idade":29,
+			"conhecimento":"Mongo, Redis, Kafka, Elastic"
+		}
+		PUT cliente/_create/1
+		{
+			"nome":"Aline",
+			"idade":29,
+			"conhecimento":"Mongo, Redis, Kafka, Elastic, Spark"
+		}
+
+
+---> POST
+
+	- Criar um documento com _id ou atualizar um documento parcial
+	
+	- Exemplo:
+		POST cliente/_update/1
+		{
+			"doc":{
+					"nome":"Laura"
+			}
+		}
+		POST cliente/_doc
+		{
+			"nome":"Douglas"
+		}
+
+
+---> DELETE
+
+	- Deletar um documento
+		DELETE cliente/_doc/1
+		
+	- Deletar um indice
+		DELETE cliente
+
+
+---> GET
+
+	- Informações sobre o nó do elasticsearch (http://loicalhost:9200/)
+		GET /
+		
+	- Buscar todos os documentos de um indice
+		GET cliente/_search
+
+	- Buscar um documento em um indice
+		GET cliente/_doc
+		
+	- Buscar a quantidade de documentos em um indice
+		GET cliente/_count
+		
+	- Buscar os dados de um documento em um indice
+		GET cliente/_source/1
+			SQL -> Selecquet * from cliente where id=1

@@ -1,0 +1,76 @@
+-----------------------------------------------
+-- Ingestão de dados	
+-----------------------------------------------
+-- Logstash - Conceitos
+-----------------------------------------------
+
+---> Logstash vou utilizar para enviar as infos para o elasticsearch,
+---- a diferença dele para o Beat, é que o logstash tem 3 plugins:
+		- Input :: dados de entrada
+		- Filter :: transformações nos dados
+		- Output :: qual saida vou enviar os meus dados
+		
+----> Uma boa pratica nos bancos de dados é enviar os beats para o logstash (vai utilizar do pipeline input->filters->output), 
+----  e vai ser disponibilido no elasticsearch
+
+
+----> Estrutura do json
+input{
+
+}
+
+filter{
+
+}
+
+output{
+
+}
+
+-----------------------------------------------
+-- Plugins de Entrada
+-----------------------------------------------
+
+---> Permite que uma fonte especifica de eventos seja lida pelo logstash
+
+---> Exemplo 
+input {
+	file{
+		id => "test_log_sem_gz"
+		path => "/var/log/*.log"
+		exclude => "*.gz"
+	}
+}
+
+
+-----------------------------------------------
+-- Plugins de Saida
+-----------------------------------------------
+
+----> Permite o envio de dados de evento para um destino especifico
+----- elasticsearch, s3...
+
+---> Exemplo 
+output {
+	stdout{
+		codec => json
+	}
+	elasticsearch{
+		hosts => ["localhost:9200"]
+		index => "teste-%{+YYYY.MM.dd}"
+	}
+}
+
+
+-----------------------------------------------
+-- Plugins de Plugin
+-----------------------------------------------
+
+----> Permite o processamento intermediário em um evento
+----- aggregate, csv, data, elasticsearch, grok(separar meus campos), mutate, split, truncate...
+
+----> Exemplo
+filter{
+	mutate{"convert"=> ["bytes","integer"]}
+	mutate{"convert"=> ["duration","float"]}
+}

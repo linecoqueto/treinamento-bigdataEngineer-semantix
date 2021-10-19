@@ -1,0 +1,116 @@
+-----------------------------------------------
+--Exercícios - Beats
+-----------------------------------------------
+
+-----------------------------------------------
+1. Enviar o arquivo <local>/paris-925.logs com uso do Filebeat
+-----------------------------------------------
+
+ok
+
+PS C:\Program Files\Filebeat> ./filebeat test config
+Config OK
+
+--
+
+PS C:\Program Files\Filebeat> ./filebeat test output
+elasticsearch: http://localhost:9200...
+  parse url... OK
+  connection...
+    parse host... OK
+    dns lookup... OK
+    addresses: 127.0.0.1, ::1
+    dial up... OK
+  TLS... WARN secure connection disabled
+  talk to server... OK
+  version: 7.9.2
+  
+--
+
+# Executar o filebeat
+PS C:\Program Files\Filebeat> ./filebeat -e
+
+-----------------------------------------------
+2. Verificar a quantidade de documentos do índice criado pelo Filebeat e visualizar seus 10 primeiros documentos
+-----------------------------------------------
+
+GET filebeat-7.9.2-2021.10.14-000001/_count
+
+{
+  "count" : 157348,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  }
+}
+
+
+-----------------------------------------------
+3. Monitorar as métricas do docker
+
+Referência:
+https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-module-docker.html (Links para um site externo.)
+
+Encontrar o socket do Docker
+$ sudo find / -name docker.sock
+-----------------------------------------------
+
+PS C:\Program Files\Metricbeat> ./metricbeat modules enable docker
+Enabled docker
+
+PS C:\Program Files\Metricbeat> ./metricbeat modules list
+Enabled:
+docker
+system
+
+---
+
+PS C:\Program Files\Metricbeat> ./metricbeat test config
+Config OK
+
+PS C:\Program Files\Metricbeat> ./metricbeat test output
+elasticsearch: http://localhost:9200...
+  parse url... OK
+  connection...
+    parse host... OK
+    dns lookup... OK
+    addresses: 127.0.0.1, ::1
+    dial up... OK
+  TLS... WARN secure connection disabled
+  talk to server... OK
+  version: 7.9.2
+
+-----------------------------------------------
+4. Verificar a quantidade de documentos do índice criado pelo Metricbeat e visualizar seus 10 primeiros documentos
+-----------------------------------------------
+
+GET metricbeat-7.9.2-2021.10.14-000001/_count
+
+GET metricbeat-7.9.2-2021.10.14-000001/_search
+
+-----------------------------------------------
+5. Monitorar o site https://www.elastic.co/pt/ (Links para um site externo.) com uso do Heartbeat
+-----------------------------------------------
+
+PS C:\Program Files\Heartbeat> ./heartbeat test config
+Config OK
+
+PS C:\Program Files\Heartbeat> ./heartbeat test output
+elasticsearch: http://localhost:9200...
+  parse url... OK
+  connection...
+    parse host... OK
+    dns lookup... OK
+    addresses: 127.0.0.1, ::1
+    dial up... OK
+  TLS... WARN secure connection disabled
+  talk to server... OK
+  version: 7.9.2
+
+-----------------------------------------------
+6. Verificar a quantidade de documentos do índice criado pelo Heartbeat e visualizar seus 10 primeiros documentos
+-----------------------------------------------
+
+GET heartbeat-7.9.2-2021.10.15-000001/_count

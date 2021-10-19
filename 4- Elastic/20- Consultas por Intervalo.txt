@@ -1,0 +1,125 @@
+-----------------------------------------------
+--Queries e Filtros
+-----------------------------------------------
+-----------------------------------------------
+--Consultas por Intervalo
+-----------------------------------------------
+
+--> Atributos para controlar o intervalo
+
+	. gte :: maior que ou igual a
+	. gt :: maior que
+	. lte :: menor que ou igual a
+	. lt :: menor que 
+	
+
+--> Exemplo
+
+- Consultar o campo idade maior ou igual a 10
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"idade":{
+					"gte":10
+				}
+			}
+		}
+	}
+	
+
+- Consultar o campo idade entre 10 e 25
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"idade":{
+					"gte":10,
+					"lte":25
+				}
+			}
+		}
+	}
+	
+	
+-----------------------------------------------
+--Consultas por Intervalo de Tempo
+-----------------------------------------------
+
+--> propriedades com data
+	. "format":"dd/MM/yyyy||yyyy"
+	. "time_zone":"+03:00"
+
+	* y : anos
+	* M : meses
+	* w : semanas
+	* d : dias
+	* H : horas
+	* h : horas
+	* m : minutos
+	* s : segundos
+	
+- Exemplos
+	. Now: agora
+	. +1d: Adiciona 1 dia
+	. -1M: Subtrai 1 mes
+	
+	
+--> Exemplo Range de data
+
+- Intervalo com diferentes formatos
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"data":{
+					"gte":"01/01/2012",
+					"lte":"2013",
+					"format":"dd/MM/yyyy||yyyy"
+				}
+			}
+		}
+	}
+	
+	
+- Intervalo com diferentes formatos
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"data":{
+					"gte":"now-1d",
+					"lt":"now"
+				}
+			}
+		}
+	}
+	
+- Intervalo com diferentes formatos
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"timestamp":{
+					"gte":"2015-01-01 00:00:00",
+					"lte":"now",
+					"time_zone":"+03:00"
+				}
+			}
+		}
+	}
+	
+	
+- Campo padrão de tempo - timestamp
+	GET cliente/_search
+	{
+		"query":{
+			"range":{
+				"@timestamp":{
+					"gte":"2015-08-04T11:00:00",
+					"lte":"2015-08-04T12:00:00"
+				}
+			}
+		}
+	}
+	

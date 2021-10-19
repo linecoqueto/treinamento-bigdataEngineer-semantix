@@ -1,0 +1,40 @@
+-----------------------------------------------
+-- COMUNICAÇÃO COM ELASTICSEARCH
+-----------------------------------------------
+
+---> API Rest
+
+	- Comunicação Protocolo HTTP
+		. HEAD
+		. GET
+		. POST
+		. PUT
+		. DELETE
+		
+	- Requisições HTTP para a API de elasticsearch por meio do envio de objetos JSON
+	
+	- Estrutura de uma requisição HTTP:
+		. <acao>endereco_api:port/indice/<opcoes>
+		
+		. PUT localhost:9200/cliente/_create
+		
+
+---> Integração Linguagens
+
+	- curl
+	- C#
+	- GO
+	- Java
+	- JavaScript
+	- PHO
+	- Python
+	- Ruby
+	- SQL
+	
+
+
+---> Interface Kibana :: Comunicação HTTP
+
+	- Acessar 
+		. http://localhost:5601
+		. Menu/Management/Dev Tools

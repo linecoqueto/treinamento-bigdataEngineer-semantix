@@ -1,0 +1,11 @@
+-----------------------------------------------
+-- Importação de dados
+-----------------------------------------------
+
+---> Importação de dados com o Kibana
+
+	- Home 
+	- Menu/Kibana/Machine Learning
+		. Import Data 
+			. Unload File
+			

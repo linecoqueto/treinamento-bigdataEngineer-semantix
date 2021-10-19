@@ -1,0 +1,64 @@
+-----------------------------------------------
+--Conceitos de Agregações
+-----------------------------------------------
+
+---> Forma de analisar os dados indexados
+
+---> Estrutura
+	GET  <index>/_search
+	{
+		"aggs":{
+			"<nomeAgregação>":{
+				"<TipoAgregação>":{}
+			}
+		}
+	}
+	
+	
+---> Tipos
+
+	- bucket :: Combinam os documentos resultantes em buckets
+		. Buckets são criados
+		
+	- Metric :: Calculos matematicos feitos nos campos de documentos
+		. São calculados em buckets
+		
+	- Matrix :: Operam em diversos campos produzindo uma matriz de resultado (matrix_stats)
+	
+	- Pipeline :: Agrega a saída de outras agregações
+	
+
+--> Buckets : Conjunto de documento formado por critérios
+	. data
+	. Intervalo	
+	. Atributo
+	
+	- Exemplo
+		. Range
+		. Date_range
+		. ip_ranges
+		. Geo_distance
+		. Significant_teams
+		. Etc
+		
+--> Metricas : Operações matematicas 
+	. Um valor de saida
+	
+	- Exemplo
+		. Avg
+		. Sum
+		. Min
+		. Max
+		. Cardinality
+		. Value_count
+		. etc
+		
+		
+--> Operações matematicas : N valores de saída
+	- Exemplo:
+		. Stats
+		. Percentiles
+		. Percentile_ranks
+		. Etc
+		
+		

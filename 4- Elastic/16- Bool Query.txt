@@ -1,0 +1,64 @@
+-----------------------------------------------
+--Queries e Filtros
+-----------------------------------------------
+-----------------------------------------------
+--Bool Query
+-----------------------------------------------
+
+	- Consultas booleanas
+	- Filtrar um dataset grande
+	- Estrutura flexivel
+	
+	- Atributos
+		. Must - and
+		. Should - or
+		. must_not - not and
+		. filter - filtrar mais dados antes de atender as outras clausulas.
+		
+		
+--> Estrutura Bool query
+	GET cliente/_search
+	{
+		"query":{
+			"bool":{
+				"must":"[{...}],
+				"must_not":[{...}],
+				"should":[(...)],
+				"filter":[{...}]
+			}
+		}
+	}
+	
+	
+--> Exemplo Bool query
+
+	-- 1 consulta booleana com N atributos
+		GET cliente/_search
+		{
+			"query":{
+				"bool": {
+					"must":[
+						{"match":{"estado":"sp"}},
+						{"match":{"ativo":"sim"}}
+					]
+				}
+			}
+		}
+		
+	*** usamos o MATCH para termos não exatos *** 
+	
+	
+		-- 1 consulta booleana com N atributos
+			GET cliente/_search
+			{
+				"query":{
+					"bool":{
+						"must":{"match":{"setor":"vendas"}},
+						"should":[
+							{"match":{"tags":"imutabilidade"}},
+							{"match":{"tags":"larga escala"}}
+						],
+							"must_not":{"match":{"nome":"inativo"}}
+					}
+				}
+			}	

@@ -1,0 +1,37 @@
+-----------------------------------------------
+--Exemplo de Analyzer
+-----------------------------------------------
+
+---> Analyzer Standard ou Simple
+
+	POST _analyze
+	{
+		"analyzer":"standard",
+		"text":"Elasticsearch e Hadoop sao ferramentas de big data"
+	}
+	
+-
+
+	POST _analyze
+	{
+		"analyzer":"simple",
+		"text":"Elasticsearch e Hadoop sao ferramentas de big data"
+	}
+	
+
+---> Analyzer whitespace
+
+	POST _analyze
+	{
+		"analyzer":"whitespace",
+		"text":"Elasticsearch e Hadoop sao ferramentas de big data"
+	}
+
+
+---> Analyzer em Português
+
+	POST _analyze
+	{
+		"analyzer":"brazilian",
+		"text":"Elasticsearch e Hadoop sao ferramentas de big data"
+	}

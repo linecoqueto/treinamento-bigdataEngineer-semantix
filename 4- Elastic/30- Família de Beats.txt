@@ -1,0 +1,135 @@
+-----------------------------------------------
+-- Ingestão de dados	
+-----------------------------------------------
+-- Família de Beats
+-----------------------------------------------
+
+---> Enviam dados de centenas ou milhares de maquinas e sistemas
+		- logstash
+		- Elasticsearch
+		
+---> Tipos de beats
+		- Filebeat :: arquivos de log
+		- Metricbeat :: metricas
+		- packetbeat :: dados de rede
+		- winlogbeat :: logs de evento do windows
+		- auditbeat :: dados de auditoria
+		- functionbeat :: agente de envio sem servidor
+		- packetbeat :: dados de rede
+		- heartbeat :: monitoramento
+		
+
+-----------------------------------------------
+-- Filebeat
+-----------------------------------------------
+
+---> Modulos de Filebeat
+---> Leitura de logs
+		- 0, 1 ou vários arquivos de log
+		
+---> Sempre verificar com atenção do elasticsearch, pois o filebeat tem que ser o mesmo.
+		- Version Elasticsearch 7.9.2
+		
+-----> Usar modulo de comunicação
+		./filebeat modules list
+		./filebeat modules enable <modulo>
+		
+-----> Testar beat
+		./filebeat test config
+		./filebeat test output
+		
+		
+-----> CONFIGURAÇÃO :: arquivo filebeat.yml
+
+	-- filebeat.prospectors:
+		- type: log
+		  enable: true
+		  paths: 
+		  - /var/log/*.log
+		  
+	-- output.elasticsearch
+		hosts: ["<es_url>"]
+		username: "<user>"
+		password: "<password>"
+
+
+-----> INICIALIZAÇÃO :: Inicializar de modo simples
+		sudo chown root filebeat.yml
+		sudo chown root modules.d/system.yml
+			. Apenas para os modulos habilitados
+			
+		sudo ./filebeat -e
+			. Exibir a configuração e saída do beat
+			
+	#ou enviar para o 
+	# output.logstash:	
+
+-----> INICIALIZAÇÃO :: Inicializar como serviço
+		sudo service filebeat start
+		sudo service filebeat status
+		sudo service filebeat stop
+		sudo service filebeat restart
+
+
+-----------------------------------------------
+-- Metricbeat
+-----------------------------------------------
+
+---> Módulos de Metricbeat
+		- Leitura de medidas quantitativas
+			. quanto estou gastando com memória ram, cpu, temperatura.
+			
+		
+-----> CONFIGURAÇÃO :: arquivo metricbeat.yml
+
+	- module: system
+	  metricset: ["cpu"]
+	  enable: true
+      period: 1s	  
+	  
+	- output.elasticsearch
+		hosts: ["<es_url>"]
+		username: "<user>"
+		password: "<password>"
+		
+	#ou enviar para o 	
+	# output.logstash:
+
+
+-----> INICIALIZAÇÃO é da mesma forma que o filebeat
+
+
+-----------------------------------------------
+-- Heartbeat
+-----------------------------------------------
+
+---> Monitoramento e disponibilidade de um link
+
+---> Pings via
+		. ICMP
+		. TCP
+		. HTTP
+		
+---> Configuração
+		. TLS
+		. Autenticação
+		. Proxies
+		
+		
+-----> CONFIGURAÇÃO :: arquivo heartbeat.yml
+
+		heartbeat.monitors:
+		- type: http
+		  urls: ["www.blablabla.com.br"]
+		  schedule: '@every 10s'
+		  
+	    - output.elasticsearch
+		hosts: ["<es_url>"]
+		username: "<user>"
+		password: "<password>"
+		
+	#ou enviar para o 	
+	# output.logstash:
+
+
+-----> INICIALIZAÇÃO é da mesma forma que o filebeat

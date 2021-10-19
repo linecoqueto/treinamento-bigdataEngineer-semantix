@@ -1,0 +1,38 @@
+-----------------------------------------------
+--Conceitos de Analyzer
+-----------------------------------------------
+
+--> Busca exata (Sim ou não)
+
+--> Busca FullText (quanto a busca casa (_score))
+	- Podemos aplicar os Analisadores
+		. Testar
+		. Aplicar em atributos específicos
+		. Analyzer personalizado
+		
+--> Indice invertido
+	- Quebrar em tokens
+	- Inserir numa tabela
+	- _search?cidade="São Paulo"
+		. Tokens: são paulo
+		
+
+-----------------------------------------------
+--Principais Analyzer
+-----------------------------------------------
+
+--> Espaço em branco: whitespace
+	- Separa as palavras por espeço
+	
+--> Simples: simple
+	- Remover números
+	- Remover espaços e pontuação (''!@#$%¨&*~^/:;.><,)
+	- Somente texto
+	- Texto em lowercase
+	
+--> Padrão: Standart
+	- Remover espaços e pontução
+	- Texto em lowercases
+	
+--> Idioma: brazilian, english
+	- Remover acentos, genero e plural

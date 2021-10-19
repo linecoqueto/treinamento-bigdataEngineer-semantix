@@ -1,0 +1,52 @@
+-----------------------------------------------
+-- INTRODUÇÃO - ELASTIC
+-----------------------------------------------
+
+---> Criado para resolver problemas de busca
+---> Motor de busca
+
+---> Formado por 3 principais ferramentas:
+		- ElasticSearch
+			. Engine de search e analytics altamente escalável
+			. Banco de dados
+			
+		- Logstash
+			. Transporte entre a origem e o destino
+		
+		- Kibana
+			. GUI (Graphical User Interface) da Elastic
+			. Visualização dos dados
+			. Gerenciamento do ElasticSearch
+			
+		- Beats: Enviar os dados para o ElasticSearch
+			. Coletores de dados
+			. Distribuído
+			. Lado do cliente (Não servidor)
+			
+			
+---> Banco Relacional x ElasticSearch
+	
+Banco Relacional       ElasticSearch
+Banco de dados			Index
+Tabela					Type (A partir da versão 7 do Elastic os documentos são todos do tipo _doc) -- descontinuado
+Schema					Mapping
+Registro(linha)			Documento
+Coluna					Atributo
+
+
+---> Indice : onde vai ficar todos os dados
+		- Shards
+			. indice é dividido por shards
+			. Armazenam os dados
+			
+		- Alias 
+			. link virtual para um indice real (apelido)
+			. Associar um alias a mais de um indice (grupos)
+			
+		- Analyzer 
+			. Buscar por full text e valores exatos
+			
+		- Mapping
+			. Definição da estrutura dos seu indice
+		
+

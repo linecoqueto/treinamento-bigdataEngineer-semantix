@@ -1,0 +1,82 @@
+-----------------------------------------------
+--Queries e Filtros
+-----------------------------------------------
+-----------------------------------------------
+--ORDEM DE BUSCA
+-----------------------------------------------
+
+- Quantas vezes o termo aparece no atributo
+- Tamanho do atributo
+- Tamanho do termo
+- Quatas vezes o termo aparece em todos os documentos
+
+- Exemplo
+	GET cliente/_search
+	{
+		"query":{
+			"match":{
+				"conhecimento":"sqoop hive impala elk"
+			}
+		}
+	}
+	
+	
+--> Padrão é o "or"
+-- "operator":"and"
+	GET cliente/_search
+	{
+		"query":{
+			"match":{
+				"conhecimento":{
+					"query":"sqoop hive",
+					"operator": "and"
+				}
+			}
+		}
+	}
+	
+
+--> Definir o minimo de % que estejam na consulta
+- "minimum_should_match": "valor em %"
+	
+- Exemplo
+	GET cliente/_search
+	{
+		"query":{
+			"match":{
+				"Hobby":{
+					"query":"sqoop hive impala",
+					"minimum_should_match": "50%"
+				}
+			}
+		}
+	}
+	
+	
+--> Multiplos Atributos
+{
+	"query":{
+		"bool":{
+			"should":[
+				{"match":{"endereco":"pinheiros"}},
+				{"match":{"cidade":"pinheiros"}},
+				{"match":{"estado":"pinheiros"}},
+			]
+		}
+	}
+}
+
+--
+
+{
+	"query":{
+		"multi_match":{
+			"query":"pinheiros",
+			"type":"most_fields",
+			"fields":["endereco","cidade","estado"]
+		}
+	}
+}
+
+
+**** OBS: Não pode usar junto com operator e minimun_should_match

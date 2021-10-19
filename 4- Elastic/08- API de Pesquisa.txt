@@ -1,0 +1,54 @@
+-----------------------------------------------
+-- API DE PESQUISA
+-----------------------------------------------
+
+---> Comandos básicos para SearchAPI
+
+	-- Buscar todos os documentos
+		. GET cliente/_search
+		
+	-- Pesquisar algo em todos os documentos
+		. GET cliente/_search?q=hadoop
+			(faz uso do campo "all")
+			
+	-- Pesquisar em um atributo especifico
+		. GET cliente/_search?q=nome:Aline
+		. GET cliente/_search?q=nome:Aline&q=idade:29
+		
+	-- Definição de consultas
+		. Query DSL (Domain Specific Language)
+		. Baseada em Json
+		. Indicada construir dessa forma, pois a consulta pode
+	      crescer ao longo do tempo
+		  
+		. GET cliente/_search?q=hadoop
+			OU
+		. GET cliente/_search?q=hadoop
+		{
+			"query":{
+				"match_all":{}
+			}
+		}
+	
+	-- Estrutura do json de busca
+		. took: tempo de milissegundos
+		. timed_out: tempo de limite excedido
+		. _shards: Qtd usadas (Sucesso e falha)
+		. Hits: Informação do resultado
+			* total: qtd de documentos encontados
+			* max_score: valor de semelhança da consulta (0 à 1)
+				** Score é calculado com uso do algoritmo BM25
+				
+				
+---> Multipos Indices
+
+	- Pesquisar em todos os indices
+		. GET _all/_search?q=windows
+		. cuidado para não fazer consultas lentas
+		
+	- Pesquisar em indices especificos
+		. GET produto,cliente/_search?q=Windows
+		. GET produto,cliente/_count?q=Windows
+		
+		. Caso o index não exista
+			* index_not_found_exception

@@ -1,0 +1,30 @@
+-----------------------------------------------
+-- Operações em Massa
+-----------------------------------------------
+-----------------------------------------------
+-- Múltiplas Operações Simultâneas
+-----------------------------------------------
+
+---> Bulk API
+
+	- Execução de várias operações de indexação / exclusão em uma única chamada de API
+	- Aumentar a velocidade de indexação
+	
+	- Comandos
+		POST _bulk
+		{"index":{"_index":"test","_id":"1"}}
+		{"field1":"value1"}
+		{"delete":{"_index":"test","_id":"2"}}
+		{"create":{"_index":"test","_id":"3"}}
+		{"field1":"value3"}
+		{"update":{"_id":"1","_index":"test"}}
+		{"doc":{"field2":"value2"}}
+		
+	- Exemplo:
+		POST concessionaria/_bulk
+		{"create":{"_id":"1"}}
+		{"nome":"carro"}
+		{"create":{"_id":"2"}}
+		{"nome":"automovel"}
+		{"create":{"_id":"3"}}
+		{"nome":"caminhão"}

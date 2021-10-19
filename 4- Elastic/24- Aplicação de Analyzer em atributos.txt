@@ -1,0 +1,85 @@
+-----------------------------------------------
+--Aplicação de Analyzer em atributos
+-----------------------------------------------
+
+----- TESTAR O ANALYZER (COM POST)
+----- CRIAR INDEX COM ANALYZER
+----- REINDEXAR OS DADOS PARA ESSE ANALYZER
+
+
+---> Adicionar em um atributos
+
+PUT cliente1
+{
+	"mappings":{
+		"properties":{
+			"conhecimento":{
+				"type":"text",
+				"analyzer":"standard"
+			}
+		}
+	}
+}
+
+
+---> Boas práticas
+
+-- Indexar o mesmo campo de maneiras diferentes para fins diferentes	
+	
+	- Tipo Keyword
+		. Classificação
+		. Agregação
+		
+	- Tipo Text
+		. Pesquisa FullText
+		
+		
+-- Manter 2 versões do atributo com analyzer
+	
+	- Tipo Keyword
+		. Dado original
+		
+	- Tipo Text
+		. Dado com analisador
+		
+		
+
+--->Exemplo :: Campo de 2 tipos
+
+PUT cliente2
+{
+	"mappings":{
+		"properties":{
+			"conhecimento":{
+				"type":"text",
+				"analyzer":"standard",
+				"fields":{"raw":{"type":"keyword"}}
+			}
+		}
+	}
+}
+
+
+--->Exemplo :: Criação de indice com settings e mappings
+
+PUT cliente3
+{
+	"settings":{
+		"index":{
+			"number_of_shards":1,
+			"number_of_replicas":0
+			}
+		},
+	"mappings":{
+		"proprieties":{
+			"nome":{"type":"text"},
+			"conhecimento":{
+			"type":"text",
+			"analyzer":"whitespace",
+			"fields":{
+				"raw":{"type":"keyword"}
+					}
+			}
+		}
+	}
+}

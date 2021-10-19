@@ -1,0 +1,69 @@
+-----------------------------------------------
+-- API DE INDEX
+-----------------------------------------------
+-----------------------------------------------
+---> Mapeamento 
+-----------------------------------------------
+
+- Elasticsearch define automaticamento no indice os tipos dos campos
+
+- Visualizar o mapeamento
+	. SQL -> schema da tabela
+	
+- Exemplo
+	. GET cliente/_mapping
+	
+	. Não é possivel alterar o tipo do dado
+		* o que posso fazer é reindexar o documento.
+		
+	. É possivel criar novos atributos.
+	
+	
+-----------------------------------------------
+---> Tipo de dados 
+-----------------------------------------------
+
+- Core
+	. Texto (text and keyword)
+	. Numerico (long, integer, short, byte, double, float)
+	. Date
+	. Binary
+	. Boolean
+	. Ip
+	. Complexos (Objext, Nested)
+	
+
+-----------------------------------------------
+---> Pesquisar mapeamento
+-----------------------------------------------
+
+- Mapeamento pelo indice
+	. GET cliente/_mapping
+	. GET client*/_mapping
+	
+- Mapeamento pelo atributo
+	. GET cliente/_mapping/field/conhecimento
+	. GET cliente/_mapping/field/conhe*
+	. GET cliente/_mapping/field/nome,conhecimento
+	
+- Mapeamento de todos os indices
+	. GET _mapping
+	
+	
+-----------------------------------------------
+---> Exemplos de mapeamento
+-----------------------------------------------
+
+- Criação 
+	
+	PUT cliente1
+	{}
+	
+	PUT cliente1/_mapping/
+	{
+	"properties":{
+		"nome":{"type":"text"},
+		"idade":{"type":"long"},
+		"conhecimento":{"type":"keyword"}
+		}
+	}
