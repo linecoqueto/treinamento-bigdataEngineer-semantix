@@ -1,0 +1,47 @@
+-----------------------------------------------
+Transformações de Dataset
+-----------------------------------------------
+
+---> Transformações tipadas criam um novo Dataset
+		- Filter
+		- Limit
+		- Sort
+		- flatMap
+		- Map
+		- orderBy
+		
+---> Transformações não tipadas retornam DataFrames ou colunas não tipadas
+		- join
+		- groupBy
+		- Col
+		- Drop
+		- Select
+		- withColumn
+		
+-----------------------------------------------
+Exemplo de Transformações
+-----------------------------------------------
+
+	- tipadas: dataset
+	- não tipadas: dataFrame
+	
+	scala> val sortedDS = regDS.sort("name")
+	
+	scala> val nameDF = regDS.select("name")
+	
+	scala> val combineDF = regDS.sort("name").
+	where("id>10").select("name")
+	
+	
+-----------------------------------------------
+Salvar Dataset
+-----------------------------------------------
+
+	- São salvos como DataFrames
+		* Dataset.write 
+			** Retorna um DataFrameWriter
+			
+	- Exemplo:
+	
+		regDS.write.save("hdfs://localhost/user/cloudera/registros/")
+		regDS.write.json("registros")

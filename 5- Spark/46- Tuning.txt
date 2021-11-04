@@ -1,0 +1,21 @@
+-----------------------------------------------
+Tunning
+-----------------------------------------------
+-----------------------------------------------
+Deploy com alocação dinâmica
+-----------------------------------------------
+
+--> Parâmetros para utilizar os recursos do cluster
+		--master $YARN
+--> Executar o log local: $YARN = local
+
+--> Executar no cluster: $YARN = yarn
+	• --deploy-mode cluster
+	• --conf "spark.dynamic.Allocation.enable=true"
+	• --conf "spark.shuffe.service.enable=true"
+	• --conf "spark.shuffe.service.port=7337"
+	• --conf "spark.dynamic.InitialExecutors=6"
+	• --conf "spark.dynamic.maxExecutors=9"
+	• --conf "spark.dynamic.minExecutors=3"
+	
+	

@@ -1,0 +1,37 @@
+-----------------------------------------------
+Opções de Leitura e Escrita em CSV
+* Em dataSet e DataFrames
+-----------------------------------------------
+-----------------------------------------------
+Leitura de Arquivo CSV
+-----------------------------------------------
+
+data = spark.read.
+		option("sep","|").
+		option("header","true").
+		option("quote","\").
+		option("mode", "DROPMALFORMED").
+		csv("hdfs:///user/teste/")
+
+** Em Python não é recomendado colocar varios options, posso colocar tudo dentro do "csv"
+
+
+------------
+
+-- criando arquivo de teste
+
+from pyspark.sql import Row
+
+Name = Row("cod","nome")
+data = [Name(1,"Aline"), Name(2,"Mayara")]
+
+data_frame = spark.createDataFrame(data)
+
+print(data_frame.printSchema())
+data_frame.show()
+
+data_frame.write.csv("/user/aline/teste_csv", mode="overwrite", header="true")
+
+-- Leitura de dados
+
+spark.read.csv("/user/aline/teste_csv", header="true", sep=";").show()

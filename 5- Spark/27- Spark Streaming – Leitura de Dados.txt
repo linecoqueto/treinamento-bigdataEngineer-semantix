@@ -1,0 +1,45 @@
+-----------------------------------------------
+Spark Streaming – Leitura de Dados
+-----------------------------------------------
+-----------------------------------------------
+Dstream - Leitura Básica
+-----------------------------------------------
+
+-- Criar um Contexto com Intervalo de 2 segundos
+
+----> em Scala
+import org.apache.spark._
+import org.apache.spark.streaming._
+val conf = new SparkConf().setMaster("local")
+val sc = new SparkContext(conf)
+val ssc = new StreamingContext(sc, Seconds(2))
+
+----> em Python
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+conf = SparkConf().setMaster("local")
+sc = SparkContext.getOrCreate(conf)
+ssc = StreamingContext(sc,2)
+
+
+-- Criar um Dstream para captura dos dados relativos a sessão da porta 9999
+
+----> em Scala
+val dstr = ssc.socketTextStream("localhost", 9999)
+
+----> em Python
+dstr = ssc.socketTextStream("localhost", 9999)
+
+
+-- Exemplo de leitura na porta 9999 no localhost
+
+from pyspark.streaming import StreamingContext
+ssc = StreamingContext(sc,2)
+readStr = ssc.socketTextStream("localhost",9999)
+readStr.pprint()
+ssc.start()
+
+
+-- Usar Netcat para enviar dados na porta 9999
+
+$ nc -lp 9999

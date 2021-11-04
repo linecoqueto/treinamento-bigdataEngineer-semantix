@@ -1,0 +1,42 @@
+-----------------------------------------------
+Exercícios – Structured Streaming com Kafka
+-----------------------------------------------
+
+-----------------------------------------------
+1. Ler o tópico do kafka “topic-kvspark” em modo batch
+-----------------------------------------------
+
+
+-----------------------------------------------
+2. Visualizar o schema do tópico
+-----------------------------------------------
+
+
+-----------------------------------------------
+3. Visualizar o tópico com o campo key e value convertidos em string
+-----------------------------------------------
+
+
+-----------------------------------------------
+4. Ler o tópico do kafka “topic-kvspark” em modo streaming
+-----------------------------------------------
+
+
+-----------------------------------------------
+5. Visualizar o schema do tópico em streaming
+-----------------------------------------------
+
+
+-----------------------------------------------
+6. Alterar o tópico em streaming com o campo key e value convertidos para string
+-----------------------------------------------
+
+
+-----------------------------------------------
+7. Salvar o tópico em streaming no tópico topic-kvspark-output a cada 5 segundos
+-----------------------------------------------
+
+
+-----------------------------------------------
+8. Salvar o tópico na pasta hdfs://namenode:8020/user/<nome>/Kafka/topic-kvspark-output
+-----------------------------------------------

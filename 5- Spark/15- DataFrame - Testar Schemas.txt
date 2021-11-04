@@ -1,0 +1,31 @@
+-----------------------------------------------
+-- DataFrame - Testar Schemas
+-----------------------------------------------
+
+------> Phyton
+
+from pyspark.sql.types import *
+
+columns_list = [
+StructField("id",StringType()),
+StructField("setor", StringType())]
+
+setor_schema = StructType(columns_list)
+
+dados_teste = [Row(1, "vendas"), Row(2,"TI"), Row(3, "RH")]
+
+setor_df = spark.createDataFrame(data = dados_test, schema=setor_schema)
+
+
+------> Phyton :: row class
+---- posso definir um schema diretamente por ele.
+
+from pyspark.sql import Row
+
+Schema = Row("id","setor")
+dados_teste = [Schema(1,"vendas"), Schema(2,"TI"), Schema(3,"RH")]
+
+teste_df = spark.createDataFrame(data=dados_teste)
+
+teste_df.printSchema()
+

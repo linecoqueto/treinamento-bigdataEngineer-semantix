@@ -1,0 +1,168 @@
+-----------------------------------------------
+Função WithColumn - Conceitos
+* Em dataSet e DataFrames
+-----------------------------------------------
+
+---> WithColumn
+		- serve para criarmos colunas
+
+		<dataframe>.withColumn("<nomeColuna>", <coluna>)
+		addColumn = data.withColumn("Novo Campo", col("id"))
+		
+		
+---> Acesso a coluna de DataFRame/DataSet
+
+--> Scala
+
+	- Col("campo")
+
+	- dataframe ("campo")
+	
+	- $"campo"
+	
+	
+--> Python
+
+	- from pyspark.sql.functions import col
+	- col ("campo")
+	
+	- dataframe["campo"]
+	
+	- dataframe.campo
+	
+	
+---
+
+dataframe.select(*cols)
+dataframe.withColumn(colName, col)
+
+
+-----------------------------------------------
+WithColumn :: Função Timestamp
+-----------------------------------------------
+
+---> 1º passo:: converter coluna para timestamp
+		- unix_timestamp(col("<ColString>"), "<FormatoAtual>"),
+		
+---> 2º passo::  Alterar formato de coluna de timestamp
+		- from_unixtime(<colTImestamp>, "<FormatoConversão>")
+
+
+---> Exemplo
+
+from pyspark.sql.functions import unix_timestamp,from_unixtime
+formato = data.select(“data”).show(1) // formato = 2020/10/25
+convUnix = formato.withColumn("timestamp", unix_timestamp(col("data"), "yyyy/MM/dd"))
+convUnixData = convUnix.withColumn(“new data", from_unixtime("timestamp", "MM-dd-yyyy"))
+
+--podemos fazer tudo em uma linha só::
+
+convDataDireto = formato.withColumn(“mes-dia-ano",
+from_unixtime(unix_timestamp(col("data"), "yyyy/MM/dd"), "MM-dd-yyyy"))
+
+
+-----------------------------------------------
+WithColumn :: Função Substring
+-----------------------------------------------
+
+---> Extrair dados de uma coluna de acordo com uma posição
+
+	<dataframe>.withColumn(“<nomeColuna>", substring(“<Coluna>”, <posicaoInicial>, <tamanho>)
+	
+	- Muito usado com concat para concatenar as colunas e strings
+	
+	
+---> Exemplo:
+
+formato = data.select(“data”).show(1) // data = 2020/10/25
+mes= formato.withColumn(“mes" ,substring(col("data"),6,2)) // mes = 10
+
+codsDF = data.select(“codigo”) // código = AA150000CCS
+resumoCod = codsDF.withColumn(“pedido" , concat(substring(col(“codigo"), 1, 2),lit(“-”),
+substring(col(“codigo"), 9, 3)) // pedido = AA-CCS
+
+
+-----------------------------------------------
+WithColumn :: Função Split
+-----------------------------------------------
+
+---> Split
+		- Criar um array de acordo com um delimitar
+		
+		- Sintaxe:
+			<dataframe>.withColumn(“<nomeColuna>", split(“<Coluna>”, ”<delimitador” ))
+			
+---> Exemplo:
+
+nomesDF = data.select(“nome”).show(1) // nome = Rodrigo Augusto Rebouças
+sepNomesDF = nomesDF.withColumn(“sepNome", split(col(“nome“), “ “))
+sepNomesDF.printSchema()
+|-- nome: string (nullable = true)
+|-- sepNome: array (nullable = true)
+valpNome = sepNomesDF.withColumn(“pNome", col(“sepNome“).getItem(0)).drop(“sepNome")
+
+
+-----------------------------------------------
+WithColumn :: Função Cast
+-----------------------------------------------
+
+	- Uso quando quero alterar o tipo do dados
+
+	- Sintaxe:
+		<dataframe>.withColumn(“<nomeColuna>", <coluna>.cast(“Tipo” ))
+
+	- Alterar as casas decimais
+		format_number(“<coluna>”, <numeroCasasDecimais>))
+
+---> Exemplo:
+
+medida = data.select(“total”).show(1) // total = 1000.00 (String)
+
+from pyspark.sql.types import *
+converter = medida.withColumn(“Total real", col(“total").cast(FloatType()))
+converter2c = converter.withColumn(“Total real", format_number(
+col(“Total real").cast(FloatType()),2)
+
+
+-----------------------------------------------
+WithColumn :: Regexp_replace
+-----------------------------------------------
+
+	- Alterar um padrão com uso de regex
+	
+	- Sintaxe
+		regexp_replace(“<coluna>”, “<padrão_atual>", “<novo_padrão>"))
+
+	- Usado para fazer cast de decimais para substituir , por .
+
+---> Exemplo:	
+	
+medida = data.select(“total”).show(1) // total = 1.000,00 (String)
+medidaR = medida.withColumn(“total”, regexp_replace(col(“total“), "\.", ""))
+// total = 1000,00 (String)
+
+medidaR = medidaR.withColumn(“total”, regexp_replace(col("total"), "\,", "."))
+// total = 1000.00 (String)
+
+from pyspark.sql.types import *
+converter = medidaR.withColumn(“Total real", col(“total").cast(FloatType() ))
+// total = 1000.00 (Float)
+
+
+-----------------------------------------------
+WithColumn :: Função When
+-----------------------------------------------
+
+	- Responsável por fazer condicional em colunas
+
+	- Sintaxe:
+		<dataframe>.withColumn("<nomeColuna>", when(<condição>,<valorVerdadeiro>).otherwise(<valorFalso>)
+
+---> Exemplo:	
+
+codigos = data.select("cod").take(5)
+// cod= { AABB, ACBB, 00ABCC, AACC, 00BBCC}
+
+remover_zeros = codigos.withColumn("cod_sem_0", when(length(col("cod")) > 4,
+substring(col("cod"), 3,4)).otherwise(col("cod")))
+// cod_sem_0 = { AABB, ACBB, ABCC, AACC, BBCC}

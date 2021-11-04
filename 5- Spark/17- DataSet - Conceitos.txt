@@ -1,0 +1,45 @@
+-----------------------------------------------
+DataSet - Conceitos
+-----------------------------------------------
+
+---> coleção distribuída de objetos de tipagem forte
+		- tipos primitivos: Int ou String
+		- tipos complexos: array ou listas
+		- Product objects
+			. scala - case classes
+			. java - javaben objects
+		
+		- row objects
+		
+---> mapeado para um schema relacional
+		- schema é definido por um encoder
+		- schema mapea objeto de propriedades para tipos de colunas
+		
+---> otimizada pelo catalyst
+
+---> implementado apenas em java e scala
+
+-----------------------------------------------
+DataFrame x Dataset
+-----------------------------------------------
+
+---> DataFrames (Conjuntos de dados de Row objects)
+
+	- Representam dados tabulares
+	- Transformações são não tipadas
+		. Linhas podem conter elementos de qualquer tipos
+		. Schemas definidos não são aplicados os tipos de coluna até o tempo de execução
+		
+
+---> Datasets
+	
+	- Representam dados tipados e orientados a objeto
+	- Transformações são tipadas
+		. Propriedades do objeto são tipadas em tempo de compilação
+		
+
+---> Representação dos dados
+
+	- RDD :: 2011
+	- DataFrame :: 2013
+	- Dataset :: 2015

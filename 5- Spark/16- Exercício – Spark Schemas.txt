@@ -1,0 +1,56 @@
+-----------------------------------------------
+Exercício – Spark Schemas
+-----------------------------------------------
+-----------------------------------------------
+1. Criar o DataFrame names_us_sem_schema para ler os arquivos no HDFS “/user/<nome>/data/names”
+-----------------------------------------------
+
+--- verificar formato do arquivo
+!hdfs dfs -ls /user/aline/exercises-data/names
+
+!hdfs dfs -cat /user/aline/exercises-data/names/yob1884.txt
+
+--- agora ler o arquivo
+names_us_sem_schema = spark.read.csv("/user/aline/exercises-data/names")
+
+-----------------------------------------------
+2. Visualizar o Schema e os 5 primeiros registos do names_us_sem_schema
+-----------------------------------------------
+
+print(names_us_sem_schema.printSchema())
+names_us_sem_schema.show(5)
+
+-----------------------------------------------
+3. Criar o DataFrame names_us para ler os arquivos no HDFS “/user/<nome>/data/names” com o seguinte schema:
+
+nome: String
+sexo: String
+quantidade: Inteiro
+-----------------------------------------------
+
+from pyspark.sql.type import *
+
+estrutura_lista = [
+	StructField("name", StringType()),
+	StructField("sexo", StringType()),
+	StructField("quantidade", IntegerType())
+]
+
+schema_names = StructType(estrutura_lista)
+
+names_us = spark.read.csv("/user/aline/data/names")
+
+-----------------------------------------------
+4. Visualizar o Schema e os 5 primeiros registos do names_us
+-----------------------------------------------
+
+print(name_us.printSchema())
+name_us.show(5)
+
+-----------------------------------------------
+5. Salvar o DataFrame names_us no formato orc no hdfs “/user/<nome>/names_us_orc”
+-----------------------------------------------
+
+name_us.write.orc("/user/aline/names_us_orc")
+
+!hdfs dfs -ls /user/aline/names_us_orc

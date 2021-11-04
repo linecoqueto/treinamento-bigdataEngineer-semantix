@@ -1,0 +1,26 @@
+-----------------------------------------------
+Agregações
+-----------------------------------------------
+
+<dataframe>.groupBy(<coluna>).agg(<f_agg>)
+
+	- count
+	- avg
+	- sum
+	- min
+	- max
+	- first
+	- last
+	- countDistinct
+	- approx_count_distinct
+	- stddev
+	- var_sample
+	- var_pop
+	- covar_samp
+	- covar_pop
+	- corr
+	
+---> Exemplo:	
+	
+peopleDF.groupBy("setor").sum("gastos").sort(desc("gastos"))
+peopleDF.groupBy("setor").agg(avg("gastos"),sum("gastos").alias("total_gastos"))

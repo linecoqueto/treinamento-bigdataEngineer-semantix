@@ -1,0 +1,42 @@
+-----------------------------------------------
+Leitura e Escrita de Stream
+-----------------------------------------------
+
+--> Exemplo de leitura na porta 9999 no localhost
+
+read_str = spark.readStream.format("socket").
+option("host", "localhost").option("port", 9999).load()
+
+...
+write_str = readStr.writeStream.format("console").start()
+
+-----------------------------------------------
+Struct Streaming – Exemplo CSV
+-----------------------------------------------
+
+--> Leitura de um arquivo csv
+	- Obrigatoriedade a definição do Schema
+	- Leitura de diretório, não arquivo
+
+user_schema = StructType().add(“nome", "string").add("idade", "integer")
+read_csv_df = spark.readStream
+	.schema(user_schema )
+	.csv("/user/nomes/")
+read_csv_df.printSchema()
+
+
+-----------------------------------------------
+Struct Streaming – Exemplo CSV
+-----------------------------------------------
+
+--> Salvar dados
+	- Orc
+	- Json
+	- Csv
+	- Parquet
+
+read_csv_df.writeStream
+	.format("csv")
+	.option("checkpointLocation", "/tmp/checkpoint")
+	.option("path", "/home/data")
+	.start()

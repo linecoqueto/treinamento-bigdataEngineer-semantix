@@ -1,0 +1,47 @@
+-----------------------------------------------
+Criação de DataSet
+-----------------------------------------------
+
+---> criar dataset com classes (recomendada) 
+		. case class <NomeClasse>(<atributo>:<tipo>,...,<atributo>:<tipo>)
+		
+	- Exemplo de teste:
+
+	case class Nane (id: Integer, name: String)
+	reg = Seq(Name(1, "Rodrigo"), Name(2,"Augusto")))
+	regDS = spark.createDataset(reg)
+	regDS.show
+
+	//imprimir para cada linha só o name
+	regDS.foreach(n => println(n.name))
+	
+
+---> criação de dataset de dataframe
+		. Ler dados estruturados para um DataFrame
+		. Criar um Dataset para ler os dados do DataFrame
+		. Forçar para inserir um schema com o Encoder
+		
+	- Exemplo:
+	
+	case class Nane (id: Integer, name: String)
+	
+	val regDF = spark.read.json("registros.json")
+	val regDS = regDF.as[Name]
+	regDS.show
+	
+	import org.apache.spark.sql.Encoders
+	val schema = Encoders.product[Name].schema
+	val regDS = spark.read.schema(schema).json("registros.json").as[Name]
+	
+	
+---> criação de dataset de RDD
+
+		. Ler dados não estruturados ou semi estruturados para um RDD
+		. Criar um Dataset para ler os dados do RDD
+		
+	case class PcodeLatLon(pcode: String, latlon: Tuple2[Double,Double])
+	val pLatLonRDD = sc.textFile("latlon.tsv").map(_.split('\t')) \
+	.map(fields => (PcodeLatLon(fields(0),(fields(1).toFloat,fields(2).toFloat))))
+	val pLatLonDS = spark.createDataset(pLatLonRDD)
+	pLatLonDS.printSchema
+	println(pLatLonDS.first)

@@ -1,0 +1,62 @@
+-----------------------------------------------
+-- DataFrame - Criação de Schemas
+-----------------------------------------------
+-----------------------------------------------
+---> Tipagem de dados
+-----------------------------------------------
+
+	- Spark SQL e DataFrame
+		. ByteType
+		. ShortType
+		. IntegerType
+		. LongType
+		. FloatType
+		. DoubleType
+		. DecimalType
+		. BigDecimal
+		. StringType
+		. BinaryType
+		. BooleanType
+		. TimestampType
+		. DataType
+		. ArrayType
+		. MapType
+		. StructType
+		
+**** https://spark.apache.org/docs/latest/sql-ref-datatypes.html
+
+-----------------------------------------------
+---> Esquemas - Definição
+-----------------------------------------------
+
+	- Estrutura dos meus dados
+	
+---> Scala
+	 . Inferir esqeuma manualmente em dados com cabeçalho
+	 
+scala> import org.apache.spark.sql.type._
+
+scala> val columnsList = List(
+		StructField("id",IntegerType),
+		StructField("setor,StringType))
+
+scala> val setorSchema = StructType(columnsList)
+
+scala> val setorDF = spark.read.option("header","true"). \
+		schema (setorSchema).csv("setor.csv")
+
+
+---> Python
+	 . Inferir esqeuma manualmente em dados com cabeçalho
+	 
+from pyspark.sql.types import *
+
+columns_list = [
+StructField("id, StringType()),
+StructField("setor", StringType())]
+
+setor_schema = StructType(columns_list)
+
+setor_df = spark.read.option("header","true").\
+schema(setor_schema).csv("setor.csv")
+

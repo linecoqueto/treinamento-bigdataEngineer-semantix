@@ -1,0 +1,17 @@
+-----------------------------------------------
+Scala - Parâmetros do Kafka
+-----------------------------------------------
+-----------------------------------------------
+Parâmetros do Kafka
+-----------------------------------------------
+
+--> Usar API Kafka para configuração
+
+scala> val kafkaParams = Map[String, Object](
+"bootstrap.servers" -> "localhost:9092",
+"key.deserializer" -> classOf[StringDeserializer],
+"value.deserializer" -> classOf[StringDeserializer],
+"group.id" -> "app-teste",
+"auto.offset.reset" -> "earliest",
+"enable.auto.commit" -> (false: java.lang.Boolean)
+)

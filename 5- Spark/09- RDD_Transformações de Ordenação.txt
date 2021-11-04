@@ -1,0 +1,12 @@
+-----------------------------------------------
+-- RDD :: Transformações de Ordenação
+-----------------------------------------------
+
+---> Scala
+
+val pOrdena = pReduce.sortBy(-_,_2)
+
+
+---> Python
+
+p_ordena = p_reduce.sortBy(lambda palavra: palavra[1], False)

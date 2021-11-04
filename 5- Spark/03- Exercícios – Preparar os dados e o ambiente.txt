@@ -1,0 +1,46 @@
+-----------------------------------------------
+Exercícios – Preparar os dados e o ambiente
+-----------------------------------------------
+
+docker-compose –f docker-compose-parcial.yml up -d
+
+-----------------------------------------------
+1. Configurar o jar do spark para aceitar o formato parquet em tabelas Hive
+
+curl -O https://repo1.maven.org/maven2/com/twitter/parquet-hadoop-bundle/1.6.0/parquet-hadoop-bundle-1.6.0.jar
+docker cp parquet-hadoop-bundle-1.6.0.jar jupyter-spark:/opt/spark/jars
+-----------------------------------------------
+
+ok
+
+-----------------------------------------------
+2. Baixar os dados dos exercícios do treinamento no diretório spark/input (volume no Namenode)
+
+cd input
+sudo git clone https://github.com/rodrigo-reboucas/exercises-data.git .
+-----------------------------------------------
+
+ok
+
+-----------------------------------------------
+3. Verificar o envio dos dados para o namenode
+-----------------------------------------------
+
+aline@aline:~/treinamentos/spark/input$ docker exec -it namenode ls /input/exercises-data
+README.md	economicFitness  escola       map.py	    populacaoLA
+WordCount.java	empreendimento	 hnpStats     names	    reduce.py
+beneficio	entrada1.txt	 iris	      namesbystate
+db-sql		entrada2.txt	 juros_selic  ouvidoria
+
+-----------------------------------------------
+4. Criar no hdfs a seguinte estrutura: /user/aline/data
+-----------------------------------------------
+
+aline@aline:~/treinamentos/spark/input$ docker exec -it namenode bash
+root@namenode:/# hdfs dfs -mkdir -p /user/aline/data
+
+-----------------------------------------------
+5. Enviar todos os dados do diretório input para o hdfs em /user/aline/data
+-----------------------------------------------
+
+root@namenode:/# hdfs dfs -put /input/* /user/aline

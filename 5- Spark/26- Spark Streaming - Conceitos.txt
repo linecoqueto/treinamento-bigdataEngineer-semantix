@@ -1,0 +1,28 @@
+
+--> Spark: Etl e processamento batch
+
+--> Spark Sql: consultas em dados estruturados
+
+--> Spark Streaming: processamento de stream
+
+--> spark Mlib: machine learning
+
+--> Spark Graphx: processamento de grafo
+
+-----------------------------------------------
+Spark Streaming - Conceitos
+-----------------------------------------------
+
+--> Abstração de alto nível
+	- Dstreams (Discretized Streaming)
+	- Representa um Stream contínuo de dados
+
+--> Extensão da API core do Spark
+	- Processamento escalonável
+	- Alta taxa de transferência
+	- Tolerante a falhas de stream de dados
+	
+--> Recebe fluxos de dados de entrada e divide os dados em lotes
+	- Processados ​pela engine do Spark para gerar o stream final de resultados em bath
+
+--> DStream é representado como uma sequência de RDDs

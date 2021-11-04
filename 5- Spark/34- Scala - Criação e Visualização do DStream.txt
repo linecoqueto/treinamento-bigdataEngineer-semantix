@@ -1,0 +1,58 @@
+-----------------------------------------------
+Scala - Criação e Visualização do DStream
+-----------------------------------------------
+
+---> Criação e Visualização do DStream
+
+--> Spark Streaming com Kafka 0.10
+
+	* Location Strategies
+		- PreferConsistent
+			. Distribuir partições uniformemente entre os executores disponíveis
+		
+		- PreferBrokers
+			. Se seus executores estiverem nos mesmos hosts que seus corretores kafka
+		
+		- PreferFixed
+			. Especifique um mapeamento explícito de partições para hosts
+
+	* Consumer Strategies
+		- Subscribe
+			. Inscrever-se em uma coleção fixa de tópicos
+
+		- SubscribePattern
+			. Use um regex para especificar tópicos de interesse
+
+		- Assign
+			. Especificar uma coleção fixa de partições
+			
+-----------------------------------------------			
+Criação do Dstream para o tópico do Kafka 
+-----------------------------------------------
+
+---> Usar estratégia do Kafka 
+
+scala> val ssc = new StreamingContext(sc,Seconds(10))
+scala> val topics = Array("topicA")
+scala> val dstream = KafkaUtils.createDirectStream[String, String](
+	ssc,
+	LocationStrategies.PreferConsistent,
+	ConsumerStrategies.Subscribe[String, String](topics, kafkaParams)
+)
+
+
+-----------------------------------------------
+Visualizar DStream
+-----------------------------------------------
+
+---> Mapear a estrutura do Tópico
+
+scala> val info_dstream = dstream.map(record => (
+
+record.topic,
+record.partition,
+record.key,
+record.value
+))
+
+scala> info_dstream.print()

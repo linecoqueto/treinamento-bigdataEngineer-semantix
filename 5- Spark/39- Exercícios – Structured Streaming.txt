@@ -1,0 +1,70 @@
+-----------------------------------------------
+Exercícios – Structured Streaming
+-----------------------------------------------
+-----------------------------------------------
+1. Criar uma aplicação em scala usando o spark para ler os dados da porta 9999 e exibir no console
+-----------------------------------------------
+
+docker exec -it jupyter-spark bash
+pyspark
+
+porta_leitura = spark.readStream.format("socket").option("host","localhost").option("port","9999").load()	
+
+porta_saida = porta_leitura.writeStream.format("console").start()
+
+---abrir em outro terminal
+docker exec -it jupyter-spark bash
+nc -lp 9999
+
+-----------------------------------------------
+2. Ler os arquivos csv “hdfs://namenode:8020/user/<nome>/data/iris/*.data” em modo streaming com o seguinte schema:
+
+sepal_length float
+sepal_width float
+petal_length float
+petal_width float
+class string
+-----------------------------------------------
+
+!hdfs dfs -ls /user/aline/exercises-data/iris/*
+
+from pyspark.sql.types import StructType
+
+iris_schema = StructType()\
+	.add("separ_lenght", "float")\
+	.add("separ_width", "float")\
+	.add("setar_lenght", "float")\
+	.add("setar_width", "float")\
+	.add("class", "string")\	
+
+print(iris_schema)
+
+iris = spark.readStream.schema(iris_schema).csv("/user/aline/exercises-data/iris/*.data")
+
+-----------------------------------------------
+3. Visualizar o schema das informações
+-----------------------------------------------
+
+iris.printSchema()
+
+-----------------------------------------------
+4. Salvar os dados no diretório “hdfs://namenode:8020/user/<nome>/stream_iris/path” e o checkpoint em “hdfs://namenode:8020/user/<nome>/stream_iris/check”
+-----------------------------------------------
+
+iris_saida = iris.writeStream.format("csv")\
+	.option("checkpointLocation","/user/aline/stream_iris/check")\
+	.option("path", "user/aline/stream_iris/path")\
+	.start()
+
+-----------------------------------------------
+5. Verificar a saida no hdfs e entender como os dados foram salvos
+-----------------------------------------------
+
+iris_saida.status
+
+!hdfs dfs -ls /user/aline/stream_iris
+
+
+-----------------------------------------------
+6. Bônus: Contar as palavras do exercício 1.
+-----------------------------------------------

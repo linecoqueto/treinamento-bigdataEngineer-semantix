@@ -1,0 +1,97 @@
+-----------------------------------------------
+-- RDD :: Transformações de Map e FlatMap
+-----------------------------------------------
+
+-----------------------------------------------
+-- RDD - FlatMap
+-----------------------------------------------
+
+---> Scala
+
+rdd.take(2)
+
+val palavras = rdd.flatMap(x => x.split(" "))
+//Operador coringa
+val palavras = rdd.flatMap(_.split(""))
+
+palavras.foreach(println)
+
+
+---> Python
+
+rdd.take(2)
+
+palavras = rdd.flatMap(lambda x: x.split(" "))
+
+palavras.collect()
+
+-----------------------------------------------
+-- RDD - Função Anonima
+-----------------------------------------------
+
+---> Python
+
+rdd.take(2)
+
+palavras = palavras.flatMap(lambda x: x.split(" "))
+
+minuscula = palavras.map(lambda linha: linha.lower())
+
+minuscula.collect()
+
+--
+
+def Func(linha):
+	linha = linha.lower()
+	return linha
+	
+minuscula = palavras.map(Func)
+
+minuscula.collect()
+
+
+-----------------------------------------------
+-- RDD - Map e FlatMap
+-----------------------------------------------
+
+rdd.take(2)
+['Big Data','Semantix SP']
+
+palavras = rdd.flatMap(lambda x: x.slip(" "))
+palavra.collect()
+['Big',
+'Data',
+'Semantix',
+'SP']
+
+palavras = rdd.map(lambda x: x.slip(" "))
+palavra.collect()
+[['Big','Data'],
+['Semantix','SP']]
+
+*** O Map para cada posição do meu rdd, ele vai aplicar um novo RDD para essa posição
+*** O Map eu semre uso quando eu não vou mexer na minha estrutura
+*** O flatMap quando eu vou mexer na minha estrutura.
+
+
+-----------------------------------------------
+-- RDD - Transforamções no Map
+-----------------------------------------------
+
+---> Scala 
+
+val pMinuscula = palavras.map(_.toLowerCase)
+val pMaiuscula = palavras.map(_.toUpperCase)
+val pChaveValor = pMinuscula.map((_,1))
+pChaveValor.take(4)
+
+---> Python
+
+pMinuscula = palavras.map(lambda linha: linha.lower())
+pMaiuscula = palavras.map(lambda linha: linha.upper())
+pChaveValor = pMinuscula.map(lambda palavra: (palavra, 1))
+pChaveValor.take(4)
+
+
+
+

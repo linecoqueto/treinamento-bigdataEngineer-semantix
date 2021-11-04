@@ -1,0 +1,34 @@
+-----------------------------------------------
+--Sessão no Spark
+-----------------------------------------------
+
+---> criar sessao spark
+		- configurar nós
+		- configurar o projeto
+		
+---> classe SparkSession fornece o acesso as funcionalidades do spark
+		- sql :: executa as consultas Spark Sql
+		- catalog :: gerenciar tabelas
+		- read :: função para ler dados de um arquivo ou outra fonte de dados
+		- conf :: objeto para gerenciar configurações do spark
+		- sparkContext :: core spark api
+		
+		
+-----------------------------------------------
+--Log
+-----------------------------------------------
+
+---> Spark usa log4j para logging
+		- configurações do log em conf/log4j.properties
+		
+---> avaliação dos níveis de log
+		- TRACE
+		- DEBUG
+		- INFO (default level in Spark applicatios)
+		- WARN (default leven in Spark shell)
+		- ERROR
+		- FATAL
+		- OFF
+		
+---> setar o nivel do log
+		spark.sparkContext.setLogLevel("INFO")

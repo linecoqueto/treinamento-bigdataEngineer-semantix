@@ -1,0 +1,62 @@
+-----------------------------------------------
+Spark Streaming – Operações
+-----------------------------------------------
+
+---> Ação: Retorna um valor
+		- Count
+		- CountByValue
+		- Reduce
+		- Print
+		- ForeachRDD
+
+---> Transformação: Retorna um DStream
+		- Map
+		- Filter
+		- FlatMap
+		- ReduceByKey
+		
+-----------------------------------------------		
+Flatmap
+-----------------------------------------------
+from pyspark.streaming import StreamingContext
+ssc = StreamingContext(sc,2)
+readStr = ssc.socketTextStream("localhost",9999)
+palavras = readStr.flatMap(lambda linha: linha.split(" "))
+palavras.saveAsTextFiles(“hdfs://localhost/linha”)
+ssc.start()
+
+
+-----------------------------------------------		
+Transformações de Map
+-----------------------------------------------
+pMinuscula = palavras.map(lambda palavra: palavra.lower())
+
+pMaiuscula = palavras.map(lambda palavra: palavra.upper())
+
+
+-----------------------------------------------
+Filtrar dados
+-----------------------------------------------
+
+filtro_a = palavras.filter(lambda palavra: palavra.startswith("a"))
+
+filtro_tamanho = palavras.filter(lambda palavra: len(palavra)>5)
+
+num_par = numeros.filter(lambda numero: numero % 2 == 0)
+
+
+-----------------------------------------------
+Spark Streaming – Contar Palavras :: Exemplo
+-----------------------------------------------
+
+---> Exemplo de contar palavras dos dados na porta 9999 no localhost
+
+import org.apache.spark.streaming._
+ssc = StreamingContext(sc, 1)
+readStr = ssc.socketTextStream("localhost“,9999)
+palavras = readStr.flatMap(lambda linha: linha.split(" "))
+pMinuscula = palavras.map(lambda palavra: palavra.lower())
+pChaveValor = pMinuscula.map(lambda palavra: (palavra,1)
+pReduce = pChaveValor.reduceByKey(lambda key1,key2: key1+key2)
+pReduce.pprint()
+ssc.start()

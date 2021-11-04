@@ -1,0 +1,37 @@
+-----------------------------------------------
+-- RDD :: Transformações de Filter e Reduce
+-----------------------------------------------
+
+-----------------------------------------------
+-- RDD - Transformações de Filter
+-----------------------------------------------
+***** Remover dados do RDD
+
+---> Scala
+
+val filtroA = palavras.filter(_.startsWith("a"))
+val filtroTamanho = palavras.filter(_.lenght > 5)
+val numPar = num.filter(_ % 2 == 0)
+
+---> Python
+
+filtro_a = palavras.filter(lambda palavra: palavra.startwith("a"))
+filtro_tamanho = palavras.filter(lambda palavra: len(palavra)>5)
+num_par = numeros.filter(lambda numero: numero % 2 == 0)
+
+
+-----------------------------------------------
+-- RDD - Transformações de Reduce
+-----------------------------------------------
+
+---> Scala
+
+val pChaveValor = pMinuscula.map((_,1))
+pReduce = pChaveValor.reduceByKey(_+_)
+pREduce.take(3)
+
+---> Python
+
+p_chave_valor = pMinuscula.map(lambda palavra: (palavra,1))
+p_reduce = p_chave_valor.reduceByKey(lambda key1, key2: key1 + key2)
+pReduce.take(3)

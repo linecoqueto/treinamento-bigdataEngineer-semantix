@@ -1,0 +1,93 @@
+-----------------------------------------------
+Variáveis Compartilhadas
+-----------------------------------------------
+
+--> Quando uma função é passada para o Spark, a operação é executada em um nó de cluster
+remoto
+- Trabalha em cópias separadas de todas as variáveis ​usadas na função
+- As variáveis ​são copiadas para cada máquina e nenhuma atualização nas variáveis ​na máquina remota é propagada de volta ao programa do driver
+- A leitura e gravação entre tarefas é ineficiente
+
+--> O Spark fornece dois tipos limitados de variáveis ​compartilhadas
+- Broadcast
+- Accumulators
+
+-----------------------------------------------
+Broadcast
+-----------------------------------------------
+
+--> Para cada máquina no cluster terá uma variável somente para leitura em cache
+		- Não é necessário enviar uma cópia dela para as tarefas
+
+--> Variáveis ​de broadcast é útil quando
+		- Tarefas em vários estágios precisam dos mesmos dados
+		- Importância de armazenar em cache os dados na forma desserializada
+		
+-----------------------------------------------		
+Broadcast - Métodos
+-----------------------------------------------
+
+--> Id - Identificador único
+--> Value – Valor
+--> Unpersist - Exclui assincronamente cópias em cache da variável broadcast nos executores
+--> Destroy - Destrói todos os dados e metadados relacionados a variável de broadcast
+--> toString - Representação de string
+
+-----------------------------------------------
+Broadcast - Exemplo
+-----------------------------------------------
+
+--> Sintaxe
+		<variavelBroadcast> = sc.broadcast(<valor>)
+
+broadcastVar = sc.broadcast( [1, 2, 3])
+type(broadcastVar)
+pyspark.broadcast.Broadcast
+broadcastVar.value
+[1, 2, 3]
+broadcastVar.destroy
+
+-----------------------------------------------
+Accumulators
+-----------------------------------------------
+
+--> Acumuladores são variáveis ​que são apenas “adicionadas” a uma operação associativa e
+comutativa
+	- Paralelismo eficiente
+	- Podem ser usados ​para implementar contadores
+	- Suporta acumuladores de tipos numéricos, e podem adicionar outros
+
+--> O spark exibe o valor para cada acumulador modificado por uma tarefa na tabela “Tasks“
+
+--> O rastreamento de acumuladores na interface do usuário pode ser útil para entender o
+progresso dos estágios em execução
+
+--> Criar o acumulador
+	- sc. long/doubleAccumulator(valor, “<nomeAcumulador>”) – Scala e view Spark’s UI
+	- sc. Accumulator(valor) - Python
+
+--> Adicionar tarefas
+	- <aculumator.add(Long/Double)
+
+scala> val accum = sc.longAccumulator(0, "My Accumulator")
+scala> sc.parallelize(Array(1, 2, 3, 4)).foreach(x => accum.add(x))
+scala> accum.value //10
+
+python accum = sc. Accumulator(0)
+python> sc.parallelize([1, 2, 3, 4]).foreach(lambda x: accum.add(x))
+python> accum.value //10
+
+-----------------------------------------------
+Cache de tabelas
+-----------------------------------------------
+
+--> Armazenar tabela em cache na memória
+	- spark.catalog.cacheTable("tableName")
+	- dataFrame.cache()
+
+--> Remover tabela da memória
+	- spark.catalog.uncacheTable("tableName")
+
+spark.catalog.cacheTable("src")
+broadcast(spark.table("src")).join(spark.table("records"), "key").show()
+spark.catalog.uncacheTable("src")

@@ -1,0 +1,38 @@
+-----------------------------------------------
+-- Exercícios - RDD com Partições
+-----------------------------------------------
+-----------------------------------------------
+1. Ler com RDD os arquivos localmente do diretório “/opt/spark/logs/” ("file:///opt/spark/logs/") com 10 partições
+-----------------------------------------------
+
+log_particoes = sc.textFile("file:///opt/spark/logs/", 10)
+log_particoes.getNumPartitions()
+
+-----------------------------------------------
+2. Contar a quantidade de cada palavras do RDD em 5 partições
+-----------------------------------------------
+
+palavras_particoes = log_particoes.flatMap(lambda linha: linha.split(" "))
+palavras_minuscula_particoes = palavras_particoes.map(lambda palavra: palavra.lower())
+minuscula_maior2_particoes  = palavras_minuscula_particoes.filter(lambda palavra: len(palavra) > 2)
+palavra_1_particoes = minuscula_maior2_particoes.map(lambda palavra: (palavra,1))
+palavra_reduce_particoes = palavra_1_particoes.reduceByKey(lambda chave1, chave2 : chave1 + chave2,5)
+
+-----------------------------------------------
+3. Salvar o RDD no diretório do HDFS /user/<seu-nome>/logs_count_word_5
+-----------------------------------------------
+
+palavra_reduce_particoes.saveAsTextFile("/user/aline/logs_count_word_5")
+
+!hdfs dfs -ls /user/aline/logs_count_word_5
+
+-----------------------------------------------
+4. Refazer a questão 2, com todas as funções na mesma linha de um RDD
+-----------------------------------------------
+
+palavras_particoes2 = log_particoes
+.flatMap(lambda linha: linha.split(" "))
+.map(lambda palavra: palavra.lower())
+.filter(lambda palavra: len(palavra) > 2)
+.map(lambda palavra: (palavra,1))
+.reduceByKey(lambda chave1, chave2 : chave1 + chave2,5)

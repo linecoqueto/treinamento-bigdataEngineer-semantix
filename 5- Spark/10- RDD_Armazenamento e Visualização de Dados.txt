@@ -1,0 +1,32 @@
+-----------------------------------------------
+-- RDD :: Armazenamento e Visualização de Dados
+-----------------------------------------------
+-----------------------------------------------
+-- Visualização
+-----------------------------------------------
+
+---> Scala
+
+pOrdena.foreach(y => println(y._1 + "-" + y._2))
+
+
+---> Python
+
+lista = p_ordena.collect()
+for row in lista:
+	print(row[0],"-",row[1])
+	
+	
+*** collect é uma operação muito custosa
+
+-----------------------------------------------
+-- Salvar dados
+-----------------------------------------------
+
+p_ordena.getNumPartitions
+
+p_ordena.saveAsTextFile("saida")
+
+------
+
+hdfs dfs -ls /user/root/saida

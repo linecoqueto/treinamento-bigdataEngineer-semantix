@@ -1,0 +1,16 @@
+-----------------------------------------------
+-- RDD :: Leitura e Visualização de Dados
+-----------------------------------------------
+
+rdd = sc.textFile("entrada*")
+
+rdd.count()
+
+rdd.first()
+
+rdd.take(5)
+
+# Mostrar dados -- cuidado para nao estourar memoria
+rdd.collect()
+rdd.foreach(println) #mostrar os valores sem array em scala
+

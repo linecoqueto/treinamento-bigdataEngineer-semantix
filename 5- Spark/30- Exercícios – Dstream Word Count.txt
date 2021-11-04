@@ -1,0 +1,64 @@
+-----------------------------------------------
+Exercícios – Dstream Word Count
+-----------------------------------------------
+
+-----------------------------------------------
+1. Criar o diretório no hdfs “/user/rodrigo/stream”
+-----------------------------------------------
+
+!hdfs dfs -mkdir /user/aline/stream/
+
+-----------------------------------------------
+2. Criar uma aplicação para contar palavras a cada 10 segundos da porta 9998 e exibir no
+console durante 50 segundos
+-----------------------------------------------
+
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+from time import sleep
+
+conf = SparkConf().setMaster("local[*]").setAppName("Dstream WordCount")
+sc = SparkContext.getOrCreate(conf)
+ssc = StreamingContext(sc,20)
+
+dstream = ssc.socketTextStream("localhost", 9998)
+
+wordcount = dstream.flatMap(lambda linha: linha.split(" ")) \
+				   .map(labda palavra: (palavra, 1)) \
+				   .reduceByKey(lambda chave1, chave2 : chave1+chave2)
+
+wordcount.pprint()
+
+ssc.start()
+sleep(50)
+ssc.stop()
+
+-----------------------------------------------
+3. Criar uma aplicação para contar palavras a cada 10 segundos da porta 9998 e salvar os
+dados no namenode no diretório “hdfs://namenode/user/rodrigo/stream/word_count”
+durante 50 segundos
+-----------------------------------------------
+
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+from time import sleep
+
+conf = SparkConf().setMaster("local[*]").setAppName("Dstream WordCount")
+sc = SparkContext.getOrCreate(conf)
+ssc = StreamingContext(sc,20)
+
+dstream = ssc.socketTextStream("localhost", 9998)
+
+wordcount = dstream.flatMap(lambda linha: linha.split(" ")) \
+				   .map(labda palavra: (palavra, 1)) \
+				   .reduceByKey(lambda chave1, chave2 : chave1+chave2)
+
+wordcount.saveAsTextFiles("/user/aline/stream/word_count")
+
+ssc.start()
+sleep(50)
+ssc.stop()
+
+!hdfs dfs -ls /user/aline/stream/
+
+

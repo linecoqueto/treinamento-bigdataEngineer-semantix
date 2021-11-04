@@ -1,0 +1,29 @@
+-----------------------------------------------
+Struct Streaming com Kafka - Leitura
+-----------------------------------------------
+-----------------------------------------------
+Leitura de dados do Kafka em Batch
+-----------------------------------------------
+
+--> Criação do Kafka Souce para consultas batch
+
+kafka_df = spark\
+.read\
+.format("kafka")\
+.option("kafka.bootstrap.server", "host1:port1,host2:port2")\
+.option("subscribe", "topic1")\
+.load()
+
+-----------------------------------------------
+Leitura de dados do Kafka em Stream
+-----------------------------------------------
+
+--> Criação do Kafka Souce para consultas streaming
+
+kafka_df = spark\
+.readStream\
+.format("kafka")\
+.option("kafka.bootstrap.server", "host1:port1,host2:port2")\
+.option("subscribe", "topic1")\
+.option("startingOffsets", "earliest")\
+.load()

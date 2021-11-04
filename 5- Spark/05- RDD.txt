@@ -1,0 +1,36 @@
+-----------------------------------------------
+-- RDD
+-----------------------------------------------
+
+---> conceitos
+
+		- Resilient Distributed Datasets
+			. Resiliene :: recriar dado perdido na memoria
+			. Distribuido :: processamento no cluster
+			. Datasets :: dados podem ser criados ou vir de fontes
+			
+		- coleção de objetos distribuídos entre os nós do cluster
+			. Armazena os dados em partições
+			
+		- Imutáveis
+		
+		- Tipo de operações
+			. Ação
+			. Transformação
+
+---> Ação :: quero retornar um valor
+		- collect
+		- count
+		- first
+		- take
+		- reduce
+		- countbykey
+		- foreach (escolher o que vou fazer para cada elemento)
+
+---> TRansformação :: retornar um novo RDD
+		- map
+		- filter
+		- flatMap
+		- groupByKey
+		- ReduceByKey
+		- AggregateByKey

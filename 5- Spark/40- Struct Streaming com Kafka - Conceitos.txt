@@ -1,0 +1,15 @@
+-----------------------------------------------
+Struct Streaming com Kafka - Conceitos
+-----------------------------------------------
+
+--> Structured Streaming
+		- Versão >= Spark 2.0.0 (2.3)
+		- https://spark.apache.org/docs/2.4.1/structured-streaming-kafka-integration.html
+
+--> Spark Streaming
+		- Configurar os parâmetros do StreamContext
+		- Configurar os parâmetros do Kafka
+		- Configurar o Dstreams para leitura dos tópicos
+
+--> Structured Streaming
+		- Configurar o Dataframe para leitura dos tópicos

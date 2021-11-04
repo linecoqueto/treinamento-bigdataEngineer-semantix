@@ -1,0 +1,22 @@
+-----------------------------------------------
+Struct Streaming - Conceitos
+-----------------------------------------------
+
+--> Engine de processamento de stream construído na engine do Spark SQL
+--> Consultas do Spark Streaming são processadas usando uma engine de processamento de
+micro lote
+	- Processar stream de dados como uma série de pequenos Jobs em batch
+	- Latências de ponta a ponta de até 100 milissegundos
+	- Tolerância de uma falha
+
+-->	Novo modelo de stream - Continuous processing
+	- Spark >= 2.3
+	- Latências de ponta a ponta tão baixas quanto 1 milissegundo
+	- Tolerância de uma falha
+	- Sem alterar as operações Dataset / DataFrame em suas consultas
+	
+--> Trata um stream de dados como uma tabela que está sendo continuamente anexada
+	- Modelo de processamento de stream muito semelhante a um modelo de processamento
+em lote
+
+**** https://spark.apache.org/docs/2.4.1/structured-streaming-programming-guide.html

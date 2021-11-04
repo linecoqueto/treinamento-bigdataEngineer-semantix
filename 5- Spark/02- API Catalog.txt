@@ -1,0 +1,36 @@
+-----------------------------------------------
+--API Catalog
+-----------------------------------------------
+
+---> Scala 
+		- Spark.catalog
+			. listDatabases
+			. setCurrentDatabase(nomeBD)
+			. listTables
+			. listColumns(nomeTabela)
+			. droTempView(nomeView)
+
+		- Em Scala preciso definir os dataframes:
+		
+		scala> val TabDF = spark.sql("Select * from bdtest.user").show(10)
+
+		scala> spark.catalog.listDatabases.show() 
+		scala> spark.catalog.setCurrentDatabase("bdtest")
+		scala> spark.catalog.listTables.show()
+		scala> valtabDF = spark.sql("select * from user").show(10)
+
+---> Phyton
+		- Spark.catalog
+			. listDatabases
+			. setCurrentDatabase(nomeBD)
+			. listTables
+			. listColumns(nomeTabela)
+			. droTempView(nomeView)
+			
+		Tab_df = spark.sql("Select * from bdtest.user").show(10)
+		
+		spark.catalog.listDatabases() 
+		spark.catalog.setCurrentDatabase("bdtest")
+		spark.catalog.listTables()
+		Tab_df = spark.sql("select * from user").show(10)
+		

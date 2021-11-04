@@ -1,0 +1,25 @@
+-----------------------------------------------
+Scala - Estrutura do código e importações
+-----------------------------------------------
+
+---> Processos básicos para Leitura de dados do Kafka
+
+scala> import ...
+scala> val ssc = new StreamingContext( ... )
+scala> val kafkaParams = Map[String, Object]( ... )
+scala> val dstream = KafkaUtils.createDirectStream[String, String]( ... )
+scala> dstream.map( ... )
+scala> ssc.start()
+
+-----------------------------------------------
+Importar packages
+-----------------------------------------------
+
+--> Packages do Kafka 010 e Streaming
+
+scala> import org.apache.kafka.clients.consumer.ConsumerRecord
+scala> import org.apache.kafka.common.serialization.StringDeserializer
+scala> import org.apache.spark.streaming.{Seconds, StreamingContext}
+scala> import org.apache.spark.streaming.kafka010._
+scala> import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
+scala> import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
